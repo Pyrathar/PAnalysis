@@ -1,6 +1,12 @@
 package datastructure.Statement;
 
 import datastructure.Assignment.Assignment;
+import datastructure.Statement.Branch.Break;
+import datastructure.Statement.Branch.Continue;
+import datastructure.Statement.Condition.IFElseCondi;
+import datastructure.Statement.Condition.WhileCondi;
+import datastructure.Statement.Interact.Read;
+import datastructure.Statement.Interact.Write;
 
 public class Statement {
 	
@@ -20,7 +26,7 @@ public class Statement {
 		Statement stmt;
 		text = text.substring(text.indexOf("(", 1),text.lastIndexOf(")"));
 		
-		stmt = new Skip();
+		stmt = new Break();
 		
 		String[] t = text.split(" ");
 		
@@ -28,42 +34,47 @@ public class Statement {
 			stmt =  Assignment.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("readStmt")){
 			stmt =  Read.convertTextToASTElement(text);
-		}else if(t[0].replaceAll("\\(", "").equals("ifStmt")){
-			stmt =  IfElse.convertTextToASTElement(text);
+		}else if(t[0].replaceAll("\\(", "").equals("ifelseStmt")){
+			stmt =  IFElseCondi.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("whileStmt")){
-			stmt =  While.convertTextToASTElement(text);
+			stmt =  WhileCondi.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("writeStmt")){
-			stmt =  Write.convertTextToASTElement(text);
+			//TODO
+			//stmt =  Write.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("stmt")){
-			stmt =  Sequence.convertTextToASTElement(text);
-		}else if(t[0].replaceAll("\\(", "").equals("skipStmt")){
-			stmt =  new Skip();
+			//TODO Analysis stme???
+			//stmt =  Sequence.convertTextToASTElement(text);
+		}else if(t[0].replaceAll("\\(", "").equals("breakStmt")){
+			stmt =  new Break();
+		}else if(t[0].replaceAll("\\(", "").equals("continueStmt")){
+			stmt =  new Continue();
 		}
 			
 		return stmt;
 	}
 	
-	public ASTLeaf toAST(){
-		
-		if(this.getClass().toString().matches("IfElse")){
-			return ((IfElse) this).toAST();
-		}else if(this.getClass().toString().matches("While")){
-			return ((While) this).toAST();
-		}else if(this.getClass().toString().matches("ArrAssignment")){
-			return ((ArrAssignment) this).toAST();
-		}else if(this.getClass().toString().matches("VarAssignment")){
-			return ((VarAssignment) this).toAST();
-		}else if(this.getClass().toString().matches("ArrRead")){
-			return ((ArrRead) this).toAST();
-		}else if(this.getClass().toString().matches("VarRead")){
-			return ((VarRead) this).toAST();
-		}else if(this.getClass().toString().matches("Write")){
-			return ((Write) this).toAST();
-		}else if(this.getClass().toString().matches("Skip")){
-			return ((Skip) this).toAST();
-		}
-		
-		return null;
-	}
+	//TODO Convert to ASTTree
+//	public ASTLeaf toAST(){
+//		
+//		if(this.getClass().toString().matches("IfElse")){
+//			return ((IfElse) this).toAST();
+//		}else if(this.getClass().toString().matches("While")){
+//			return ((While) this).toAST();
+//		}else if(this.getClass().toString().matches("ArrAssignment")){
+//			return ((ArrAssignment) this).toAST();
+//		}else if(this.getClass().toString().matches("VarAssignment")){
+//			return ((VarAssignment) this).toAST();
+//		}else if(this.getClass().toString().matches("ArrRead")){
+//			return ((ArrRead) this).toAST();
+//		}else if(this.getClass().toString().matches("VarRead")){
+//			return ((VarRead) this).toAST();
+//		}else if(this.getClass().toString().matches("Write")){
+//			return ((Write) this).toAST();
+//		}else if(this.getClass().toString().matches("Skip")){
+//			return ((Skip) this).toAST();
+//		}
+//		
+//		return null;
+//	}
 
 }

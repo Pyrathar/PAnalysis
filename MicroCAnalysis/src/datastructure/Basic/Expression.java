@@ -3,15 +3,15 @@ package datastructure.Basic;
 import datastructure.Enum.BinaryOp;
 import datastructure.Operator.BinaryOperator;
 
-public class Arithmetic {
+public class Expression {
 	
 private static String astType = "aexpr";
 	
-	public Arithmetic(){
+	public Expression(){
 		super();
 	}
 	
-	public static Arithmetic convertTextToASTElement(String text){
+	public static Expression convertTextToASTElement(String text){
 		text = text.replaceAll("\\(", "").replaceAll("\\)", "");
 		String[] expressions = text.split(astType);
 		int i = 0;
@@ -29,28 +29,28 @@ private static String astType = "aexpr";
 				if(a[2].equals("[")){
 					return new ArrVariable(
 							a[1],
-							Arithmetic.convertTextToASTElement(text.split(astType,i+2)[i+1]));
+							Expression.convertTextToASTElement(text.split(astType,i+2)[i+1]));
 				}else if(a[2].matches(".*[+-/*//].*")){
 					String[] b = text.split("[+-/*//]",2);
 					if(a[2].equals("+")){
 						return new BinaryOperator(
-								Arithmetic.convertTextToASTElement(b[0]), 
-								Arithmetic.convertTextToASTElement(b[1]), 
+								Expression.convertTextToASTElement(b[0]), 
+								Expression.convertTextToASTElement(b[1]), 
 								BinaryOp.ADD);	
 					}else if(a[2].equals("-")){
 						return new BinaryOperator(
-								Arithmetic.convertTextToASTElement(b[0]), 
-								Arithmetic.convertTextToASTElement(b[1]), 
+								Expression.convertTextToASTElement(b[0]), 
+								Expression.convertTextToASTElement(b[1]), 
 								BinaryOp.SUB);	
 					}else if(a[2].equals("*")){
 						return new BinaryOperator(
-								Arithmetic.convertTextToASTElement(b[0]), 
-								Arithmetic.convertTextToASTElement(b[1]), 
+								Expression.convertTextToASTElement(b[0]), 
+								Expression.convertTextToASTElement(b[1]), 
 								BinaryOp.MULIP);	
 					}else if(a[2].equals("/")){
 						return new BinaryOperator(
-								Arithmetic.convertTextToASTElement(b[0]), 
-								Arithmetic.convertTextToASTElement(b[1]), 
+								Expression.convertTextToASTElement(b[0]), 
+								Expression.convertTextToASTElement(b[1]), 
 								BinaryOp.DIVI);	
 					}
 				}

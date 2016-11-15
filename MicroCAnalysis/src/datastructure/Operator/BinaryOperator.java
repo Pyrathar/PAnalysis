@@ -1,35 +1,35 @@
 package datastructure.Operator;
 
-import datastructure.Basic.Arithmetic;
+import datastructure.Basic.Expression;
 import datastructure.Enum.BinaryOp;
 
-public class BinaryOperator extends Arithmetic {
+public class BinaryOperator extends Expression {
 	
-	private Arithmetic leftValue;
+	private Expression leftValue;
 	
-	private Arithmetic rightValue;
+	private Expression rightValue;
 	
 	private BinaryOp operator;
 	
-	public BinaryOperator(Arithmetic leftValue,Arithmetic rightValue,BinaryOp operator) {
+	public BinaryOperator(Expression leftValue,Expression rightValue,BinaryOp operator) {
 		this.leftValue = leftValue;
 		this.rightValue = rightValue;
 		this.operator = operator;
 	}
 
-	public Arithmetic getLeftValue() {
+	public Expression getLeftValue() {
 		return leftValue;
 	}
 
-	public void setLeftValue(Arithmetic leftValue) {
+	public void setLeftValue(Expression leftValue) {
 		this.leftValue = leftValue;
 	}
 
-	public Arithmetic getRightValue() {
+	public Expression getRightValue() {
 		return rightValue;
 	}
 
-	public void setRightValue(Arithmetic rightValue) {
+	public void setRightValue(Expression rightValue) {
 		this.rightValue = rightValue;
 	}
 

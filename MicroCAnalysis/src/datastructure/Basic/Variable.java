@@ -1,6 +1,6 @@
 package datastructure.Basic;
 
-public class Variable extends Arithmetic {
+public class Variable extends Expression {
 	
 	private String name;
 	

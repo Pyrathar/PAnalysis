@@ -1,6 +1,6 @@
 package datastructure.Statement.Interact;
 
-import datastructure.Basic.Arithmetic;
+import datastructure.Basic.Expression;
 import datastructure.Basic.ArrVariable;
 import datastructure.Basic.Variable;
 import datastructure.Statement.Statement;
@@ -18,7 +18,7 @@ public class Read extends Statement {
 		if(t[3].equals("[")){
 			String index = text.substring(text.indexOf("[", 1)+2,text.indexOf("]")-1);
 			read = new ReadArray (new ArrVariable(t[2], 
-					Arithmetic.convertTextToASTElement(index)));
+					Expression.convertTextToASTElement(index)));
 		}else{
 			read = new ReadVariable(new Variable(t[2]));
 		}

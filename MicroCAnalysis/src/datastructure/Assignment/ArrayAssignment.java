@@ -1,13 +1,13 @@
 package datastructure.Assignment;
 
-import datastructure.Basic.Arithmetic;
+import datastructure.Basic.Expression;
 import datastructure.Basic.ArrVariable;
 
 public class ArrayAssignment extends Assignment {
 
 	private ArrVariable value;
 
-	public ArrayAssignment(ArrVariable value,Arithmetic assignment) {
+	public ArrayAssignment(ArrVariable value,Expression assignment) {
 		super(assignment);
 		this.value = value;
 	}
