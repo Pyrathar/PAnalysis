@@ -14,8 +14,6 @@ public class ArrayDeclar extends Declaration {
 		return name;
 	}
 
-
-
 	public void setName(ArrVariable name) {
 		this.name = name;
 	}

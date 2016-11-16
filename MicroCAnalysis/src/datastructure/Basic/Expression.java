@@ -41,17 +41,17 @@ private static String astType = "aexpr";
 						return new BinaryOperator(
 								Expression.convertTextToASTElement(b[0]), 
 								Expression.convertTextToASTElement(b[1]), 
-								BinaryOp.SUB);	
+								BinaryOp.MINUS);	
 					}else if(a[2].equals("*")){
 						return new BinaryOperator(
 								Expression.convertTextToASTElement(b[0]), 
 								Expression.convertTextToASTElement(b[1]), 
-								BinaryOp.MULIP);	
+								BinaryOp.MUL);	
 					}else if(a[2].equals("/")){
 						return new BinaryOperator(
 								Expression.convertTextToASTElement(b[0]), 
 								Expression.convertTextToASTElement(b[1]), 
-								BinaryOp.DIVI);	
+								BinaryOp.DIV);	
 					}
 				}
 			}

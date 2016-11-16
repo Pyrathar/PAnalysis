@@ -1,20 +1,21 @@
 package datastructure.Statement.Condition;
 
+import datastructure.Basic.Expression;
 import datastructure.Statement.Statement;
 
 public class Condition extends Statement {
 	
-	private boolean condition;
+	private Expression condition;
 	
-	public Condition(boolean condition) {
+	public Condition(Expression condition) {
 		this.condition = condition;
 	}
 
-	public boolean isCondition() {
+	public Expression isCondition() {
 		return condition;
 	}
 
-	public void setCondition(boolean condition) {
+	public void setCondition(Expression condition) {
 		this.condition = condition;
 	}
 }

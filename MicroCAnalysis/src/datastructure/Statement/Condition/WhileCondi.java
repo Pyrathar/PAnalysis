@@ -1,5 +1,6 @@
 package datastructure.Statement.Condition;
 
+import datastructure.Basic.Expression;
 import datastructure.Statement.Statement;
 
 public class WhileCondi extends Condition {
@@ -7,7 +8,7 @@ public class WhileCondi extends Condition {
 	
 	private Statement whileState;
 	
-	public WhileCondi(boolean condition,Statement whileState) {
+	public WhileCondi(Expression condition,Statement whileState) {
 		super(condition);
 		this.whileState = whileState;
 	}

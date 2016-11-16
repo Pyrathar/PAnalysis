@@ -2,17 +2,17 @@ package datastructure.Enum;
 
 public enum BinaryOp {
 
-	L 		(">"), 
-	LEQ		(">="),
-	S		("<"),
-	SEQ		("<="),
+	GT 		(">"), 
+	GE		(">="),
+	LT		("<"),
+	LE		("<="),
 	EQ		("="),
 	NEQ		("!="),
 	
 	ADD		("+"), 
-	SUB		("-"),
-	MULIP	("*"),
-	DIVI	("/"),
+	MINUS   ("-"),
+	MUL	    ("*"),
+	DIV	    ("/"),
 	AND     ("&"),
 	OR      ("|");
 	

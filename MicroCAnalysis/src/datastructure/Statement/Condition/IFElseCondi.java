@@ -1,5 +1,6 @@
 package datastructure.Statement.Condition;
 
+import datastructure.Basic.Expression;
 import datastructure.Statement.Statement;
 
 public class IFElseCondi extends Condition {
@@ -8,7 +9,7 @@ public class IFElseCondi extends Condition {
 	
 	private Statement elseState;
 
-	public IFElseCondi(boolean condition,Statement ifState,Statement elseState) {
+	public IFElseCondi(Expression condition,Statement ifState,Statement elseState) {
 		super(condition);
 		this.ifState = ifState;
 		this.elseState = elseState;
