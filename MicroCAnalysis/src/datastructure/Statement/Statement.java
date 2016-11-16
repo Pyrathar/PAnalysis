@@ -1,14 +1,14 @@
 package datastructure.Statement;
 
+import AbstractSyntax.ASTElement;
 import datastructure.Assignment.Assignment;
 import datastructure.Statement.Branch.Break;
 import datastructure.Statement.Branch.Continue;
 import datastructure.Statement.Condition.IFElseCondi;
 import datastructure.Statement.Condition.WhileCondi;
 import datastructure.Statement.Interact.Read;
-import datastructure.Statement.Interact.Write;
 
-public class Statement {
+public class Statement extends ASTElement {
 	
 	private static String astType = "stmt";
 	

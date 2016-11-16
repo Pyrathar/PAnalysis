@@ -9,6 +9,8 @@ public class Program extends Statement {
 	
 	private Statement statement;
 	
+	public Program(){}
+	
 	public Program(Declaration declar, Statement statement){
 		this.declar = declar;
 		this.statement = statement;

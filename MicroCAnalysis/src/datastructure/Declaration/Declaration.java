@@ -1,10 +1,11 @@
 package datastructure.Declaration;
 
+import AbstractSyntax.ASTElement;
 import datastructure.Basic.ArrVariable;
 import datastructure.Basic.Constant;
 import datastructure.Basic.Variable;
 
-public class Declaration {
+public class Declaration extends ASTElement {
 	
 	private static String astType = "decl";
 	
