@@ -1,14 +1,14 @@
 package datastructure.Statement.Condition;
 
+import datastructure.Basic.Condition;
 import datastructure.Basic.Expression;
 import datastructure.Statement.Statement;
 
-public class WhileCondi extends Condition {
-	
+public class WhileCondi extends Control {
 	
 	private Statement whileState;
 	
-	public WhileCondi(Expression condition,Statement whileState) {
+	public WhileCondi(Condition condition,Statement whileState) {
 		super(condition);
 		this.whileState = whileState;
 	}
@@ -22,12 +22,14 @@ public class WhileCondi extends Condition {
 	}
 
 	public static WhileCondi convertTextToASTElement(String text){
-		WhileCondi ifElse = null;
+		WhileCondi whileCo = null;
+		String[] texts = text.split("(while |\\{|\\})");
 		String[] t = text.split("(if |then|else|fi)");
 		//TODO Analysis while data
-
+        whileCo = new WhileCondi((Condition)Condition.convertTextToASTElement(texts[1]),
+        		Statement.convertTextToASTElement(texts[2]));
 		
-		return ifElse;
+		return whileCo;
 	}
 	
 //	public ASTLeaf toAST(){

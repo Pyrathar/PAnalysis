@@ -1,9 +1,6 @@
-package datastructure.Statement.Condition;
+package datastructure.Basic;
 
-import datastructure.Basic.Expression;
-import datastructure.Statement.Statement;
-
-public class Condition extends Statement {
+public class Condition extends Expression {
 	
 	private Expression condition;
 	

@@ -1,4 +1,4 @@
-package datastructure.Basic;
+package datastructure.Enum;
 
 public enum Type {
 	

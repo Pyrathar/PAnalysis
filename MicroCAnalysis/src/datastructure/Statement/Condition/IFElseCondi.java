@@ -1,15 +1,15 @@
 package datastructure.Statement.Condition;
 
-import datastructure.Basic.Expression;
+import datastructure.Basic.Condition;
 import datastructure.Statement.Statement;
 
-public class IFElseCondi extends Condition {
+public class IFElseCondi extends Control {
 	
 	private Statement ifState;
 	
 	private Statement elseState;
 
-	public IFElseCondi(Expression condition,Statement ifState,Statement elseState) {
+	public IFElseCondi(Condition condition,Statement ifState,Statement elseState) {
 		super(condition);
 		this.ifState = ifState;
 		this.elseState = elseState;

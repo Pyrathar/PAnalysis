@@ -1,13 +1,13 @@
 package datastructure.Statement.Condition;
 
-import datastructure.Basic.Expression;
+import datastructure.Basic.Condition;
 import datastructure.Statement.Statement;
 
-public class IFCondi extends Condition{
+public class IFCondi extends Control{
 	
 	private Statement state;
 
-	public IFCondi(Expression condition, Statement state) {
+	public IFCondi(Condition condition, Statement state) {
 		super(condition);
 		this.state = state;
 		// TODO Auto-generated constructor stub

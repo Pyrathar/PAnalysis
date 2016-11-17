@@ -49,39 +49,39 @@ public class Main {
 //			Node node = a.toFlowGraph(ast, 0);
 //			a.showAST(ast, 0);
 			
-			if (analysis.equals("RD")) {
-				System.out.println();
-				System.out.println("Reaching defintion result:");
-				Worklist rd = new analysis.worklist.ReachingDefinition(new MonotoneFramework(node, node.toList()));
-				MFP r = rd.worklistAlgorithm();
-
-				System.out.print("   Circle:");
-				System.out.print("\t\t\t");
-				System.out.print("Bullet:");
-				System.out.println();
-				for (int i = 0; i < r.getCircles().length; i++) {
-					System.out.print(i + 1 + ": ");
-					rd.printList(r.getCircle(i + 1));
-					rd.printList(r.getBullet(i + 1));
-					System.out.println();
-				}
-			} else if (analysis.equalsIgnoreCase("DS")) {
-				System.out.println();
-				System.out.println("Detection of Signs analysis result:");
-				Worklist ds = new SignsAnalysisDefinition(new MonotoneFramework(node, node.toList(), '0'));
-				MFP result = ds.worklistAlgorithm();
-
-				System.out.print("   Circle:");
-				System.out.print("\t\t\t");
-				System.out.print("Bullet:");
-				System.out.println();
-				for (int i = 0; i < result.getCircles().length; i++) {
-					System.out.print(i + 1 + ": ");
-					ds.printList(result.getCircle(i + 1));
-					ds.printList(result.getBullet(i + 1));
-					System.out.println();
-				}
-			}
+//			if (analysis.equals("RD")) {
+//				System.out.println();
+//				System.out.println("Reaching defintion result:");
+//				Worklist rd = new analysis.worklist.ReachingDefinition(new MonotoneFramework(node, node.toList()));
+//				MFP r = rd.worklistAlgorithm();
+//
+//				System.out.print("   Circle:");
+//				System.out.print("\t\t\t");
+//				System.out.print("Bullet:");
+//				System.out.println();
+//				for (int i = 0; i < r.getCircles().length; i++) {
+//					System.out.print(i + 1 + ": ");
+//					rd.printList(r.getCircle(i + 1));
+//					rd.printList(r.getBullet(i + 1));
+//					System.out.println();
+//				}
+//			} else if (analysis.equalsIgnoreCase("DS")) {
+//				System.out.println();
+//				System.out.println("Detection of Signs analysis result:");
+//				Worklist ds = new SignsAnalysisDefinition(new MonotoneFramework(node, node.toList(), '0'));
+//				MFP result = ds.worklistAlgorithm();
+//
+//				System.out.print("   Circle:");
+//				System.out.print("\t\t\t");
+//				System.out.print("Bullet:");
+//				System.out.println();
+//				for (int i = 0; i < result.getCircles().length; i++) {
+//					System.out.print(i + 1 + ": ");
+//					ds.printList(result.getCircle(i + 1));
+//					ds.printList(result.getBullet(i + 1));
+//					System.out.println();
+//				}
+//			}
 
 		} catch (RecognitionException e) {
 			e.printStackTrace();

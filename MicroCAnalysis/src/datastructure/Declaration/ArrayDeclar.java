@@ -1,5 +1,6 @@
 package datastructure.Declaration;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Basic.ArrVariable;
 
 public class ArrayDeclar extends Declaration {
@@ -18,14 +19,14 @@ public class ArrayDeclar extends Declaration {
 		this.name = name;
 	}
 
-//
-//	public ASTLeaf toAST(){
-//		
-//		ASTLeaf ast = new ASTLeaf(this);
-//		ast.addChildren(name.toAST());
-//		
-//		return ast;
-//	}
+
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this);
+		ast.addChildren(name.toAST());
+		
+		return ast;
+	}
 //	
 //	public String getLabel() {
 //		return "int " + name.getLabel();

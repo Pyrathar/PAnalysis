@@ -1,9 +1,11 @@
 package datastructure.Basic;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Enum.BinaryOp;
 import datastructure.Operator.BinaryOperator;
+import datastructure.Statement.Statement;
 
-public class Expression {
+public class Expression extends Statement {
 	
 private static String astType = "aexpr";
 	
@@ -60,19 +62,19 @@ private static String astType = "aexpr";
 		return null;
 	}
 	
-//	public ASTLeaf toAST(){
-//		
-//		ASTLeaf ast = new ASTLeaf(this);
-//		
-//		if(this.getClass().toString().matches(".*BinaryOperator")){
-//			ast.addChildren(((BinaryOperator) this).getFirstValue().toAST());
-//			ast.addChildren(((BinaryOperator) this).getSecondValue().toAST());
-//		}else if(this.getClass().toString().matches(".*Negate")){
-//			ast.addChildren(((Negate) this).getValue().toAST());
-//		}else if(this.getClass().toString().matches(".*ArrValue")){
-//			ast.addChildren(((ArrValue) this).getIndex().toAST());
-//		}
-//		
-//		return ast;
-//	}
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this);
+		
+		if(this.getClass().toString().matches(".*BinaryOperator")){
+			//ast.addChildren(((BinaryOperator) this).getFirstValue().toAST());
+			//ast.addChildren(((BinaryOperator) this).getSecondValue().toAST());
+		}else if(this.getClass().toString().matches(".*Negate")){
+			//ast.addChildren(((Negate) this).getValue().toAST());
+		}else if(this.getClass().toString().matches(".*ArrVariable")){
+			ast.addChildren(((ArrVariable) this).getIndex().toAST());
+		}
+		
+		return ast;
+	}
 }
