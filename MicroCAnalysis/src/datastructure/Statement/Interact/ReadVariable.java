@@ -17,5 +17,9 @@ public class ReadVariable extends Read{
 	public void setValue(Variable value) {
 		this.value = value;
 	}
+	
+	public String toString() {
+		return "read " + value.toString();
+	}
 
 }

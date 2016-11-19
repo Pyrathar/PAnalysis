@@ -15,12 +15,12 @@ public class Read extends Statement {
 	public static Read convertTextToASTElement(String text){
 		Read read = null;
 		String[] t = text.split("read | ;");
+		String index[] = t[1].replaceAll("\\)", "").split(" ");
 		if(t[1].contains("[")){
-			String index[] = t[1].replaceAll("\\)", "").split(" ");
 			read = new ReadArray (new ArrVariable(index[1], 
 					Expression.convertTextToASTElement(t[1])));
 		}else{
-			read = new ReadVariable(new Variable(t[2]));
+			read = new ReadVariable(new Variable(index[1]));
 		}
 		
 		return read;
