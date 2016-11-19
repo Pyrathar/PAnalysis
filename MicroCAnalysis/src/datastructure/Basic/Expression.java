@@ -1,7 +1,6 @@
 package datastructure.Basic;
 
 import AbstractSyntax.ASTNode;
-import datastructure.Enum.BinaryOp;
 import datastructure.Statement.Statement;
 
 public class Expression extends Statement {
@@ -21,6 +20,14 @@ private static String astType = "aexpr";
 				return new Variable(val[1]);
 			}else {
 				return new Constant(Integer.parseInt(val[1]));
+			}
+		}else if(expressions.length == 2){
+			//read or write statement
+			String[] sple = expressions[1].split(" ");
+			if(sple[3].equals("identifier")){
+				return new Variable(sple[4]);
+			}else {
+				return new Constant(Integer.parseInt(sple[4]));
 			}
 		}
 		for (String s : expressions) {
@@ -55,5 +62,9 @@ private static String astType = "aexpr";
 		}
 		
 		return ast;
+	}
+	
+	public String toString() {
+		return "";
 	}
 }

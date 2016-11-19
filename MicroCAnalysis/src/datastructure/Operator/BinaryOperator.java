@@ -42,4 +42,8 @@ public class BinaryOperator extends Condition {
 		this.operator = operator;
 	}
 	
+	public String toString() {
+		return leftValue.toString() + " "+ operator.toString() + " "+rightValue.toString();
+	}
+	
 }

@@ -19,7 +19,7 @@ public class ASTAnalysis {
 		for (ParseTree e : parseTree) {
 			if(e.toStringTree(parser).startsWith("{")){
 				top = new ASTNode(new Program());
-			}else if(e.toStringTree(parser).startsWith("end")){
+			}else if(e.toStringTree(parser).startsWith("}")){
 				top.addChildren(new ASTNode(new End()));
 			}
 			else{

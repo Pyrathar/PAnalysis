@@ -18,6 +18,10 @@ public class ReadArray extends Read {
 		this.value = value;
 	}
 	
+	public String toString() {
+		return "read "+value.toString();
+	}
+	
 
 //	public ASTLeaf toAST(){
 //		

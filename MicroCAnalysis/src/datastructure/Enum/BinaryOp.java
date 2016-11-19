@@ -25,4 +25,8 @@ public enum BinaryOp {
 	public String getOperator(){
 		return operator;
 	}
+	
+	public String toString(){
+		return operator;
+	}
 }

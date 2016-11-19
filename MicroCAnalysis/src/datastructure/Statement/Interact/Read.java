@@ -1,7 +1,7 @@
 package datastructure.Statement.Interact;
 
-import datastructure.Basic.Expression;
 import datastructure.Basic.ArrVariable;
+import datastructure.Basic.Expression;
 import datastructure.Basic.Variable;
 import datastructure.Statement.Statement;
 
@@ -14,11 +14,11 @@ public class Read extends Statement {
 	
 	public static Read convertTextToASTElement(String text){
 		Read read = null;
-		String[] t = text.split(" ");
-		if(t[3].equals("[")){
-			String index = text.substring(text.indexOf("[", 1)+2,text.indexOf("]")-1);
-			read = new ReadArray (new ArrVariable(t[2], 
-					Expression.convertTextToASTElement(index)));
+		String[] t = text.split("read | ;");
+		if(t[1].contains("[")){
+			String index[] = t[1].replaceAll("\\)", "").split(" ");
+			read = new ReadArray (new ArrVariable(index[1], 
+					Expression.convertTextToASTElement(t[1])));
 		}else{
 			read = new ReadVariable(new Variable(t[2]));
 		}

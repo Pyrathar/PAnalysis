@@ -20,5 +20,9 @@ public class VariAssignment extends Assignment {
 	public void setValue(Variable value) {
 		this.value = value;
 	}
+	
+	public String toString(){
+		return value + " =" + this.getAssignment().toString();
+	}
 
 }
