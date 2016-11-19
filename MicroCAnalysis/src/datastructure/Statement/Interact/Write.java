@@ -1,8 +1,10 @@
 package datastructure.Statement.Interact;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Basic.Expression;
+import datastructure.Statement.Statement;
 
-public class Write {
+public class Write extends Statement{
 	
 	private Expression value;
 	private static String astType = "writeStmt";
@@ -19,15 +21,15 @@ public class Write {
 		
 		return w;
 	}
-//	
-//	public ASTLeaf toAST(){
-//		
-//		ASTLeaf ast = new ASTLeaf(this);
-//
-//		ast.addChildren(a.toAST());
-//		
-//		return ast;
-//	}
+	
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this);
+
+		ast.addChildren(value.toAST());
+		
+		return ast;
+	}
 	
 	public String toString() {
 		return "write";

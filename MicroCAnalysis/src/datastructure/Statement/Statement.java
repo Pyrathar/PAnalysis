@@ -8,6 +8,7 @@ import datastructure.Statement.Branch.Continue;
 import datastructure.Statement.Condition.IFElseCondi;
 import datastructure.Statement.Condition.WhileCondi;
 import datastructure.Statement.Interact.Read;
+import datastructure.Statement.Interact.Write;
 
 public class Statement extends ASTElement {
 	
@@ -41,7 +42,7 @@ public class Statement extends ASTElement {
 			stmt =  WhileCondi.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("writeStmt")){
 			//TODO
-			//stmt =  Write.convertTextToASTElement(text);
+			stmt =  Write.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("stmt")){
 			//TODO
 			stmt =  Statement.convertTextToASTElement(text);

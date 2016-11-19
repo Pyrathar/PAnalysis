@@ -33,7 +33,7 @@ private static String astType = "aexpr";
 		for (String s : expressions) {
 			String[] a = s.trim().split(" ");
 			if(a.length > 3){
-				return Condition.convertTextToASTElement(expressions[1].concat(expressions[2]));
+				return Condition.convertTextToASTElement(removeFirstEle(expressions));
 			}
 			if(a.length == 2 || a.length == 3 && a[2].equals("]")){
 				if(a[1].equals("-")){
@@ -46,6 +46,16 @@ private static String astType = "aexpr";
 			}
 		}
 		return null;
+	}
+	
+	public static String removeFirstEle(String[] array) {
+		String result = "";
+		if(array.length > 1){
+			for(int i=1;i<array.length;i++){
+				result += array[i];
+			}
+		}
+		return result;
 	}
 	
 	public ASTNode toAST(){
