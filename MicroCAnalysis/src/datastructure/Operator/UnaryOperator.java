@@ -1,9 +1,10 @@
 package datastructure.Operator;
 
+import datastructure.Basic.Condition;
 import datastructure.Basic.Expression;
 import datastructure.Enum.UnaryOp;
 
-public class UnaryOperator extends Expression {
+public class UnaryOperator extends Condition {
 	
 	private Expression rightValue;
 	

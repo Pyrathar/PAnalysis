@@ -18,18 +18,22 @@ public class Assignment extends Statement {
 	
 	public static Assignment convertTextToASTElement(String text){
 		Assignment assign = null;
-		String[] t = text.split(" ");
-		String assignment = text.substring(text.indexOf(":=", 1)+3,text.indexOf(";")-1);
-		if(t[2].equals("[")){
-			String index = text.substring(text.indexOf("[", 1)+2,text.indexOf("]")-1);
-			assign = new ArrayAssignment(
-					new ArrVariable(t[1], Expression.convertTextToASTElement(index)),
-					Expression.convertTextToASTElement(assignment));
-		}else{
-			assign = new VariAssignment(new Variable(t[1]),
-					Expression.convertTextToASTElement(assignment));
+		String[] ts = text.replaceAll("\\(", "").replaceAll("\\)", "").split("=");
+		
+		Variable vari = null;
+		String[] list = ts[0].split(" ");
+		if(list[1].equals("identifier")) {
+			vari = new Variable(list[2]);
 		}
 		
+		if(text.lastIndexOf("[")!= -1){
+//			assign = new ArrayAssignment(
+//					new ArrVariable(t[1], Expression.convertTextToASTElement(index)),
+//					Expression.convertTextToASTElement(assignment));
+		}else{
+			assign = new VariAssignment(vari,
+					Expression.convertTextToASTElement(ts[1]));
+		}
 		return assign;
 	}
 

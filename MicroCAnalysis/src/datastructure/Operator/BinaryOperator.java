@@ -1,9 +1,10 @@
 package datastructure.Operator;
 
+import datastructure.Basic.Condition;
 import datastructure.Basic.Expression;
 import datastructure.Enum.BinaryOp;
 
-public class BinaryOperator extends Expression {
+public class BinaryOperator extends Condition {
 	
 	private Expression leftValue;
 	

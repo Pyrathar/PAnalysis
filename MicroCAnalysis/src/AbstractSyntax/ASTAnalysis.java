@@ -9,6 +9,7 @@ import datastructure.Declaration.ArrayDeclar;
 import datastructure.Declaration.VariDeclar;
 import datastructure.Program.End;
 import datastructure.Program.Program;
+import datastructure.Statement.Condition.WhileCondi;
 
 public class ASTAnalysis {
 	
@@ -29,8 +30,8 @@ public class ASTAnalysis {
 				
 				if(element.getClass().toString().matches(".*IfElse")){
 					//top.addChildren(((IFElseCondi) element).toAST());
-				}else if(element.getClass().toString().matches(".*While")){
-					//top.addChildren(((While) element).toAST());
+				}else if(element.getClass().toString().matches(".*WhileCondi")){
+					top.addChildren(((WhileCondi) element).toAST());
 				}else if(element.getClass().toString().matches(".*ArrAssignment")){
 					//top.addChildren(((ArrayAssignment) element).toAST());
 				}else if(element.getClass().toString().matches(".*VarAssignment")){
