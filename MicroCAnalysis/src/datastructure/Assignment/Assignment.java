@@ -27,9 +27,10 @@ public class Assignment extends Statement {
 		}
 		
 		if(text.lastIndexOf("[")!= -1){
-//			assign = new ArrayAssignment(
-//					new ArrVariable(t[1], Expression.convertTextToASTElement(index)),
-//					Expression.convertTextToASTElement(assignment));
+			String[] val = text.split("\\[ | \\]");
+			assign = new ArrayAssignment(
+					new ArrVariable(list[2], Expression.convertTextToASTElement(val[1])),
+					Expression.convertTextToASTElement(ts[1]));
 		}else{
 			assign = new VariAssignment(vari,
 					Expression.convertTextToASTElement(ts[1]));

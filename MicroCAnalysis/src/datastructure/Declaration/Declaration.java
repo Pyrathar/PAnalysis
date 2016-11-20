@@ -32,7 +32,7 @@ public class Declaration extends ASTElement {
 		}
 		if(text.indexOf('[') != -1){
 			String index = values[7].replaceAll("\\)", "");
-			decl = new ArrayDeclar(new ArrVariable(value,new Constant(Integer.parseInt(index))));
+			decl = new ArrayDeclar(type,new ArrVariable(value,new Constant(Integer.parseInt(index))));
 		}else{
 			decl = new VariDeclar(type,new Variable(value));
 		}

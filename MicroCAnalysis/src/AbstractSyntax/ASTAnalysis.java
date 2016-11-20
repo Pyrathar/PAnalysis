@@ -18,9 +18,9 @@ public class ASTAnalysis {
 		
 		for (ParseTree e : parseTree) {
 			if(e.toStringTree(parser).startsWith("{")){
-				top = new ASTNode(new Program());
+				top = new ASTNode(new Program(),"{");
 			}else if(e.toStringTree(parser).startsWith("}")){
-				top.addChildren(new ASTNode(new End()));
+				top.addChildren(new ASTNode(new End(),"}"));
 			}
 			else{
 				ASTElement element = ASTElement.convertTextToASTElement(e.toStringTree(parser));
@@ -63,7 +63,7 @@ public class ASTAnalysis {
 		for (int i = 1; i < level; i++) {
 			System.out.print("    ");
 		}
-    	System.out.println(level + ": " + node.getElement());
+    	System.out.println(level + ": " + node.getName());
     	for (ASTNode child : node.getChildren()) {
 			showAST(child, level);
 		}

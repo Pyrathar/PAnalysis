@@ -35,7 +35,7 @@ public class WhileCondi extends Control {
 	
 	public ASTNode toAST(){
 
-		ASTNode ast = new ASTNode(this);
+		ASTNode ast = new ASTNode(this,"while");
 		ast.addChildren(this.getCondi().toAST());
 
 		for(int i=0;i<whileState.getStatementList().size();i++){

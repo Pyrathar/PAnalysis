@@ -15,5 +15,9 @@ public class Program extends Statement {
 		this.declar = declar;
 		this.statement = statement;
 	}
+	
+	public String getName() {
+		return "{";
+	}
 
 }

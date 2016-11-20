@@ -1,7 +1,17 @@
 package datastructure.Enum;
 
-public enum Type {
+public enum Type{
 	
-	INT,
-	VOID
+	INT ("int"),
+	VOID ("void");
+	
+	private String type;
+	
+	Type(String type){
+		this.type = type;
+	}
+ 	
+	public String toString() {
+		return type;
+	}
 }

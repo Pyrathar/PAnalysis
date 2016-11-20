@@ -1,5 +1,6 @@
 package datastructure.Statement.Interact;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Basic.ArrVariable;
 
 public class ReadArray extends Read {
@@ -23,14 +24,14 @@ public class ReadArray extends Read {
 	}
 	
 
-//	public ASTLeaf toAST(){
-//		
-//		ASTLeaf ast = new ASTLeaf(this);
-//
-//		ast.addChildren(arr.toAST());
-//		
-//		return ast;
-//	}
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this,"");
+
+		ast.addChildren(value.toAST());
+		
+		return ast;
+	}
 //	
 //
 //	public String getLabel(){

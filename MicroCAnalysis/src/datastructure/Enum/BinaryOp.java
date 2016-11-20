@@ -19,7 +19,7 @@ public enum BinaryOp {
 	private String operator;
 	
 	BinaryOp(String operator){
-	this.operator = operator;
+		this.operator = operator;
 	}
 	
 	public String getOperator(){

@@ -2,12 +2,16 @@ package datastructure.Declaration;
 
 import AbstractSyntax.ASTNode;
 import datastructure.Basic.ArrVariable;
+import datastructure.Enum.Type;
 
 public class ArrayDeclar extends Declaration {
 	
 	private ArrVariable name;
 
-	public ArrayDeclar(ArrVariable name){
+	private Type type;
+	
+	public ArrayDeclar(Type type,ArrVariable name){
+		this.type = type;
 		this.name = name;
 	}
 	
@@ -19,14 +23,24 @@ public class ArrayDeclar extends Declaration {
 		this.name = name;
 	}
 	
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
 	public String toString() {
-		return name.toString();
+		return type.toString() + " " + name.toString();
 	}
 
 
 	public ASTNode toAST(){
 		
-		ASTNode ast = new ASTNode(this);
+		ASTNode ast = new ASTNode(this,"ArrayDeclaration");
+		ast.addChildren(new ASTNode(type.toString()));
+		//ast.addChildren(new ASTNode(name.getName()));
 		ast.addChildren(name.toAST());
 		
 		return ast;

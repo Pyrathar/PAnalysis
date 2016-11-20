@@ -8,9 +8,15 @@ public class ASTNode {
 	private ASTNode parent = null;
 	private ASTElement element;
 	private List<ASTNode> children = new ArrayList<ASTNode>();
+	private String name;
 
-	public ASTNode(ASTElement element){
+	public ASTNode(ASTElement element,String name){
+		this.name = name;
 		this.element = element;
+	}
+	
+	public ASTNode(String name) {
+		this.name = name;
 	}
 
 	public ASTNode getParent() {
@@ -41,6 +47,14 @@ public class ASTNode {
 		this.children.add(child);
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<ASTNode> getStmtAndDecl(){
 		List<ASTNode> stmtAndDecl = new ArrayList<ASTNode>();
 		

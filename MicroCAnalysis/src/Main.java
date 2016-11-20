@@ -47,7 +47,7 @@ public class Main {
 			ASTNode ast = a.toAST(parserResult.children, parser);
 			// a.showAST(ast, 0);
 			ast.getStmtAndDecl();
-			FlowNode node = a.toFlowGraph(ast, 0);
+			//FlowNode node = a.toFlowGraph(ast, 0);
 			a.showAST(ast, 0);
 			
 //			if (analysis.equals("RD")) {

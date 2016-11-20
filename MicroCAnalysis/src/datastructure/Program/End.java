@@ -4,7 +4,10 @@ import AbstractSyntax.ASTElement;
 
 public class End extends ASTElement {
 	
-	public End()
-	{}
+	public End(){}
+	
+	public String getName(){
+		return "}";
+	}
 
 }

@@ -3,6 +3,7 @@ package datastructure.Assignment;
 import AbstractSyntax.ASTNode;
 import datastructure.Basic.Expression;
 import datastructure.Basic.Variable;
+import datastructure.Enum.BinaryOp;
 
 public class VariAssignment extends Assignment {
 	
@@ -28,9 +29,10 @@ public class VariAssignment extends Assignment {
 
 	public ASTNode toAST(){
 		
-		ASTNode ast = new ASTNode(this);
+		ASTNode ast = new ASTNode(this,"VariableAssignment");
 
-		ast.addChildren(new ASTNode(this.value));
+		ast.addChildren(new ASTNode(this.value,this.value.getName()));
+		ast.addChildren(new ASTNode(BinaryOp.EQ.toString()));
 		ast.addChildren(this.getAssignment().toAST());
 		
 		return ast;

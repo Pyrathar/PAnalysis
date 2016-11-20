@@ -25,9 +25,9 @@ public class ReadVariable extends Read{
 	
 	public ASTNode toAST(){
 		
-		ASTNode ast = new ASTNode(this);
+		ASTNode ast = new ASTNode(this,"Read");
 
-		ast.addChildren(new ASTNode(this.value));
+		ast.addChildren(new ASTNode(this.value,this.value.getName()));
 		
 		return ast;
 	}

@@ -13,6 +13,10 @@ public class Constant extends Expression {
 		return value + "";
 	}
 	
+	public int getValue() {
+		return value;
+	}
+	
 	
 	public String getLabel() {
 		return value + "";
