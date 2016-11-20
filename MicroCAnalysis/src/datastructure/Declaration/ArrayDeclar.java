@@ -18,6 +18,10 @@ public class ArrayDeclar extends Declaration {
 	public void setName(ArrVariable name) {
 		this.name = name;
 	}
+	
+	public String toString() {
+		return name.toString();
+	}
 
 
 	public ASTNode toAST(){

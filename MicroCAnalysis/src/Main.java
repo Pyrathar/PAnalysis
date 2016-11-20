@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.RecognitionException;
 
 import AbstractSyntax.ASTAnalysis;
 import AbstractSyntax.ASTNode;
+import AbstractSyntax.FlowNode;
 import parser.MicroCLexer;
 import parser.MicroCParser;
 
@@ -46,8 +47,8 @@ public class Main {
 			ASTNode ast = a.toAST(parserResult.children, parser);
 			// a.showAST(ast, 0);
 			ast.getStmtAndDecl();
-//			Node node = a.toFlowGraph(ast, 0);
-//			a.showAST(ast, 0);
+			FlowNode node = a.toFlowGraph(ast, 0);
+			a.showAST(ast, 0);
 			
 //			if (analysis.equals("RD")) {
 //				System.out.println();

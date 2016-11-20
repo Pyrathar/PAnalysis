@@ -1,5 +1,6 @@
 package datastructure.Assignment;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Basic.Expression;
 import datastructure.Basic.Variable;
 
@@ -25,4 +26,13 @@ public class VariAssignment extends Assignment {
 		return value + " =" + this.getAssignment().toString();
 	}
 
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this);
+
+		ast.addChildren(new ASTNode(this.value));
+		ast.addChildren(this.getAssignment().toAST());
+		
+		return ast;
+	}
 }

@@ -45,8 +45,11 @@ public class ASTNode {
 		List<ASTNode> stmtAndDecl = new ArrayList<ASTNode>();
 		
 		for (ASTNode astLeaf : this.getChildren()) {
-			if(astLeaf.element.getClass().toString().matches("(.*data_structure\\.S.*|.*data_structure\\.D.*)")){
-				stmtAndDecl.add(astLeaf);
+			if(astLeaf != null) {
+				System.out.println(astLeaf.element.getClass().toString());
+				if(astLeaf.element.getClass().toString().matches("(.*datastructure\\.Declaration.*|.*datastructure\\.Statement.*)")){
+					stmtAndDecl.add(astLeaf);
+				}
 			}
 		}
 		

@@ -1,5 +1,6 @@
 package datastructure.Statement.Interact;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Basic.Variable;
 
 public class ReadVariable extends Read{
@@ -20,6 +21,15 @@ public class ReadVariable extends Read{
 	
 	public String toString() {
 		return "read " + value.toString();
+	}
+	
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this);
+
+		ast.addChildren(new ASTNode(this.value));
+		
+		return ast;
 	}
 
 }
