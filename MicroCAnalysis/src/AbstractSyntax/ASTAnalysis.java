@@ -93,6 +93,12 @@ public class ASTAnalysis {
 					preFlowNode[0].setNextFirst(newFlowNode);
 				else
 					preFlowNode[0].setNextSecond(newFlowNode);
+			}else if(leaf.getElement().getClass().toString().matches(".*IFElseCondi")) {
+				newFlowNode = flowForIfelse(leaf.getElement(),preFlowNode[0]);
+				if(preFlowNode[0].getNext() == null || preFlowNode[0].getNext()[0] == null)
+					preFlowNode[0].setNextFirst(newFlowNode);
+				else
+					preFlowNode[0].setNextSecond(newFlowNode);
 			}else{
 				newFlowNode = new FlowNode(preFlowNode[0],leaf,flowId);
 				if(preFlowNode[1] != null){
@@ -118,47 +124,89 @@ public class ASTAnalysis {
 		WhileCondi whileCode = ((WhileCondi)element);
 		ASTNode node = new ASTNode(whileCode.getCondi(),"");
 		FlowNode condi = new FlowNode(previous,node,flowId);
+		previous.setNextFirst(condi);
 		flowId++;
-		List<Statement> states = whileCode.getWhileState().getStatementList();
+		flowForSequence(whileCode.getWhileState(),condi,true);
+		
+		return condi;
+	}
+	
+	public FlowNode flowForIfelse(ASTElement element,FlowNode previous) {
+		IFElseCondi ifelse = (IFElseCondi) element;
+		FlowNode cureNo = previous;
+		ASTNode node = new ASTNode(ifelse,"");
+		FlowNode newNode = new FlowNode(node,flowId);
+		System.out.println(flowId);
+		flowId++;
+		previous.setNextFirst(newNode);
+		cureNo = newNode;
+		flowForSequence(ifelse.getIfState(),cureNo,false);
+		flowForSequence(ifelse.getElseState(),cureNo,false);
+		return newNode;
+	}
+	
+	public FlowNode flowForSequence(ASTElement element,FlowNode previous,boolean isWhile) {
+		FlowNode curNode = previous;
+		Sequence sequ = (Sequence)element;
+		List<Statement> states = sequ.getStatementList();
 		if(states != null && states.size() >0) {
-			FlowNode newNode = new FlowNode(previous,new ASTNode(states.get(0),""),flowId);
-			condi.setNextFirst(newNode);
-			previous = newNode;
-			for(int i=1;i<states.size();i++) {
+			for(int i=0;i<states.size();i++) {
+				ASTNode node = new ASTNode(states.get(i),"");
+				FlowNode fl = new FlowNode(node,flowId);
+				System.out.println(flowId);
 				flowId++;
-				if(i!=states.size()-1)
-				{
-					FlowNode whileFirst = new FlowNode(previous,new ASTNode(states.get(i),""),flowId);
-					previous.setNextFirst(whileFirst);
-					previous = whileFirst;
-				}else {
-					FlowNode lastNode = new FlowNode(previous,new ASTNode(states.get(i),""),flowId);
-					previous.setNextFirst(lastNode);
-					lastNode.setNextFirst(condi);
-					if(condi.getPrevious()[0] == null) {
-						condi.setPreviousFirst(lastNode);
+				if(i==0) {
+					if(curNode.getNext()[0] == null) {
+						curNode.setNextFirst(fl);
 					}else {
-						condi.setPreviousSecond(lastNode);
+						curNode.setNextSecond(fl);
+					}
+					curNode = fl;
+				}else {
+					if(i==states.size()-1 && isWhile) {
+						fl.setNextFirst(previous);
+					}
+					if(curNode.getNext()[0] == null) {
+						curNode.setNextFirst(fl);
+					}else {
+						curNode.setNextSecond(fl);
 					}
 				}
 			}
 		}
-		return condi;
+		return curNode;
 	}
 	
 	public void showFlow(FlowNode node) {
 		flowGraph += node.getId();
-		if(node.getNext()[0] != null) {
-			flowGraph += "-->";
-			if(!flowGraph.contains(node.getNext()[0].getId()+"")) {
-				showFlow(node.getNext()[0]);
-			}else {
-				FlowNode nex = node.getNext()[0];
-				flowGraph += nex.getId()+"";
-				if(nex.getNext()[1] != null) {
-					flowGraph += "-->";
-					showFlow(nex.getNext()[1]);
+		System.out.println(node.getLeaf().getElement().getClass().toString());
+		if(node.getLeaf().getElement().getClass().toString().matches(".*IFElseCondi")) {
+			System.out.println("sssss");
+			for(int i=0;i<node.getNext().length;i++) {
+				showNextNode(node.getNext()[i]);
+			}
+		}else {
+			if(node.getNext()[0] != null) {
+				flowGraph += "-->";
+				if(!flowGraph.contains(node.getNext()[0].getId()+"")) {
+					showFlow(node.getNext()[0]);
+				}else {
+					FlowNode nex = node.getNext()[0];
+					flowGraph += nex.getId()+"";
+					if(nex.getNext()[1] != null) {
+						flowGraph += "-->";
+						showFlow(nex.getNext()[1]);
+					}
 				}
+			}
+		}
+	}
+	
+	public void showNextNode(FlowNode node) {
+		if(node != null) {
+			flowGraph += "-->";
+			if(!flowGraph.contains(node.getId()+"")) {
+				showFlow(node);
 			}
 		}
 	}

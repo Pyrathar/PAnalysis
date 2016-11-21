@@ -8,34 +8,34 @@ import datastructure.Statement.Statement;
 
 public class IFElseCondi extends Control {
 	
-	private Statement ifState;
+	private Sequence ifState;
 	
-	private Statement elseState;
+	private Sequence elseState;
 
 	
 	public IFElseCondi(Condition condition) {
 		super(condition);
 	}
 
-	public IFElseCondi(Condition condition,Statement ifState,Statement elseState) {
+	public IFElseCondi(Condition condition,Sequence ifState,Sequence elseState) {
 		super(condition);
 		this.ifState = ifState;
 		this.elseState = elseState;
 	}
 
-	public Statement getIfState() {
+	public Sequence getIfState() {
 		return ifState;
 	}
 
-	public void setIfState(Statement ifState) {
+	public void setIfState(Sequence ifState) {
 		this.ifState = ifState;
 	}
 
-	public Statement getElseState() {
+	public Sequence getElseState() {
 		return elseState;
 	}
 
-	public void setElseState(Statement elseState) {
+	public void setElseState(Sequence elseState) {
 		this.elseState = elseState;
 	}
 	

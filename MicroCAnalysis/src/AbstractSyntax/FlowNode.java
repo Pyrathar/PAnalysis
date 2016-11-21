@@ -59,11 +59,11 @@ public class FlowNode {
 		this.next[1] = next;
 	}
 
-	public ASTNode getLine() {
+	public ASTNode getLeaf() {
 		return leaf;
 	}
 
-	public void setLine(ASTNode leaf) {
+	public void setLeaf(ASTNode leaf) {
 		this.leaf = leaf;
 	}
 
