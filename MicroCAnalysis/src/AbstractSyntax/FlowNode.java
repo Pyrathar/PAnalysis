@@ -121,9 +121,6 @@ public class FlowNode {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-//		result = prime * result + ((leaf == null) ? 0 : leaf.hashCode());
-//		result = prime * result + Arrays.hashCode(next);
-//		result = prime * result + Arrays.hashCode(previous);
 		return result;
 	}
 
@@ -152,8 +149,7 @@ public class FlowNode {
 
 	@Override
 	public String toString() {
-		return "Node [id=" + id + ", next="
-				+ (next != null ? next[0] != null ? next[0].toString() : "next[0] = null" : "next = null") + "]";
+		return "Node [id=" + id + "]";
 	}
-
+	
 }

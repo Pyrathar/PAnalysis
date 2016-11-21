@@ -43,13 +43,18 @@ public class Main {
 		try {
 			MicroCParser.ProgramContext parserResult = parser.program();
 			// System.out.println(parserResult);
-			ASTAnalysis a = new ASTAnalysis();
-			ASTNode ast = a.toAST(parserResult.children, parser);
+			ASTAnalysis analyais = new ASTAnalysis();
+			ASTNode ast = analyais.toAST(parserResult.children, parser);
 			// a.showAST(ast, 0);
 			ast.getStmtAndDecl();
-			//FlowNode node = a.toFlowGraph(ast, 0);
-			a.showAST(ast, 0);
+			analyais.showAST(ast, 0);
 			
+			FlowNode node = analyais.toFlowGraph(ast);
+			analyais.showFlow(node);
+			System.out.println(analyais.flowGraph);
+			if(analysis.equals("RD")) {
+				
+			}
 //			if (analysis.equals("RD")) {
 //				System.out.println();
 //				System.out.println("Reaching defintion result:");

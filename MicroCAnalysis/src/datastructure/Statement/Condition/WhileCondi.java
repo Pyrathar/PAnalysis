@@ -43,5 +43,9 @@ public class WhileCondi extends Control {
 		}
 		return ast;
 	}
+	
+	public String toString() {
+		return this.getCondi().toString();
+	}
 
 }

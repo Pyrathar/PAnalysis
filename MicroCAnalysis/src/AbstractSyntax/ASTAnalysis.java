@@ -9,9 +9,15 @@ import datastructure.Declaration.ArrayDeclar;
 import datastructure.Declaration.VariDeclar;
 import datastructure.Program.End;
 import datastructure.Program.Program;
+import datastructure.Statement.Sequence;
+import datastructure.Statement.Statement;
 import datastructure.Statement.Condition.WhileCondi;
 import datastructure.Statement.Interact.Write;
 public class ASTAnalysis {
+	
+	public int flowId=0;
+	
+	public String flowGraph = "";
 	
 	public ASTNode toAST(List<ParseTree> parseTree, Parser parser){
 		ASTNode top = null;
@@ -69,19 +75,25 @@ public class ASTAnalysis {
 		}
 	}
 	
-	public FlowNode toFlowGraph(ASTNode ast, int id){
+	public FlowNode toFlowGraph(ASTNode ast){
 		FlowNode first = null;
 		FlowNode[] preFlowNode = new FlowNode[2];
 		FlowNode newFlowNode = null;
 		
 		for (ASTNode leaf : ast.getStmtAndDecl()) {
-			id++;
+			flowId++;
 			if(preFlowNode[0] == null){
-				newFlowNode = new FlowNode(leaf,id);
+				newFlowNode = new FlowNode(leaf,flowId);
 				first = newFlowNode;
-			}
-			else{
-				newFlowNode = new FlowNode(preFlowNode[0],leaf,id);
+			}else if(leaf.getElement().getClass().toString().matches(".*WhileCondi")) {
+				System.out.println(preFlowNode[0].toString());
+				newFlowNode= flowForWhile(leaf.getElement(),preFlowNode[0]);
+				if(preFlowNode[0].getNext() == null || preFlowNode[0].getNext()[0] == null)
+					preFlowNode[0].setNextFirst(newFlowNode);
+				else
+					preFlowNode[0].setNextSecond(newFlowNode);
+			}else{
+				newFlowNode = new FlowNode(preFlowNode[0],leaf,flowId);
 				if(preFlowNode[1] != null){
 					newFlowNode.setPreviousSecond(preFlowNode[1]);
 					if(preFlowNode[1].getNext()[0] == null)
@@ -97,34 +109,58 @@ public class ASTAnalysis {
 					preFlowNode[0].setNextSecond(newFlowNode);
 			}
 			preFlowNode[0] = newFlowNode;
-			int i = 0;
-			for (ASTNode child : leaf.getStmtAndDecl()) {
-				System.out.println(leaf.getElement().getClass().toString());
-				if(leaf.getElement().getClass().toString().matches(".*WhileCondi")){
-					FlowNode temp = toFlowGraph(child,id);
-					temp.setPreviousFirst(preFlowNode[0]);
-					newFlowNode.setNextFirst(temp);
-					FlowNode temp2 = temp.getEnd();
-					temp2.setNextFirst(preFlowNode[0]);
-					preFlowNode[0].setPreviousSecond(temp2);
-					id = temp2.getId();
-				}
-				else{
-					FlowNode temp = toFlowGraph(child,id);
-					if(i == 0)
-						newFlowNode.setNextFirst(temp);
-					else{
-						newFlowNode.setNextSecond(temp);
-					}
-					FlowNode temp2 = temp.getEnd();
-					preFlowNode[i] = temp2;
-					id = temp2.getId();
-				}
-				i++;
-			}
 		}
-
 		return first;
 	}
+	
+	private FlowNode flowForWhile(ASTElement element,FlowNode previous) {
+		WhileCondi whileCode = ((WhileCondi)element);
+		ASTNode node = new ASTNode(whileCode.getCondi(),"");
+		FlowNode condi = new FlowNode(previous,node,flowId);
+		flowId++;
+		List<Statement> states = whileCode.getWhileState().getStatementList();
+		if(states != null && states.size() >0) {
+			FlowNode newNode = new FlowNode(previous,new ASTNode(states.get(0),""),flowId);
+			condi.setNextFirst(newNode);
+			previous = newNode;
+			for(int i=1;i<states.size();i++) {
+				flowId++;
+				if(i!=states.size()-1)
+				{
+					FlowNode whileFirst = new FlowNode(previous,new ASTNode(states.get(i),""),flowId);
+					previous.setNextFirst(whileFirst);
+					previous = whileFirst;
+				}else {
+					FlowNode lastNode = new FlowNode(previous,new ASTNode(states.get(i),""),flowId);
+					previous.setNextFirst(lastNode);
+					lastNode.setNextFirst(condi);
+					if(condi.getPrevious()[0] == null) {
+						condi.setPreviousFirst(lastNode);
+					}else {
+						condi.setPreviousSecond(lastNode);
+					}
+				}
+			}
+		}
+		return condi;
+	}
+	
+	public void showFlow(FlowNode node) {
+		flowGraph += node.getId();
+		if(node.getNext()[0] != null) {
+			flowGraph += "-->";
+			if(!flowGraph.contains(node.getNext()[0].getId()+"")) {
+				showFlow(node.getNext()[0]);
+			}else {
+				FlowNode nex = node.getNext()[0];
+				flowGraph += nex.getId()+"";
+				if(nex.getNext()[1] != null) {
+					flowGraph += "-->";
+					showFlow(nex.getNext()[1]);
+				}
+			}
+		}
+	}
+
 
 }
