@@ -15,7 +15,7 @@ public class WhileCondi extends Control {
 		this.whileState = whileState;
 	}
 	
-	public Statement getWhileState() {
+	public Sequence getWhileState() {
 		return whileState;
 	}
 

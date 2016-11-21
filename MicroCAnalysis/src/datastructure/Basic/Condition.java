@@ -24,7 +24,7 @@ public class Condition extends Expression {
 					String operator = sta[3].replaceAll(" ", "");
 					BinaryOp[] opArr = BinaryOp.values();
 					for(int i=0;i<opArr.length;i++){
-						if(opArr[i].equals(operator)) {
+						if(opArr[i].getOperator().equals(operator)) {
 							return new BinaryOperator(exps1,
 									Expression.convertTextToASTElement(sta[4]),opArr[i]);
 						}
