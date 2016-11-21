@@ -1,6 +1,9 @@
 package datastructure.Statement.Condition;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Basic.Condition;
+import datastructure.Basic.Expression;
+import datastructure.Statement.Sequence;
 import datastructure.Statement.Statement;
 
 public class IFElseCondi extends Control {
@@ -8,6 +11,11 @@ public class IFElseCondi extends Control {
 	private Statement ifState;
 	
 	private Statement elseState;
+
+	
+	public IFElseCondi(Condition condition) {
+		super(condition);
+	}
 
 	public IFElseCondi(Condition condition,Statement ifState,Statement elseState) {
 		super(condition);
@@ -33,24 +41,28 @@ public class IFElseCondi extends Control {
 	
 	public static IFElseCondi convertTextToASTElement(String text){
 		IFElseCondi ifElse = null;
-		String[] t = text.split("(if |then|else|fi)");
-		//TODO Analysis boolean data
-//		ifElse = new IFElseCondi(Bool.convertTextToASTElement(t[1]), 
-//				Statement.convertTextToASTElement(t[2]), 
-//				Statement.convertTextToASTElement(t[3]));
-		
+		String newTex = text.replaceAll("\\(","").replaceAll("\\)", "");
+		String[] partcondition = newTex.split("(if |\\{|\\} |else | \\{\\})");
+
+		String condition = partcondition[1].replaceAll("\\(", "").replaceAll("\\)", "");
+
+		ifElse = new IFElseCondi((Condition) Expression.convertTextToASTElement(condition),
+				Sequence.convertTextToASTElement(partcondition[2]),
+				Sequence.convertTextToASTElement(partcondition[5]));
 		return ifElse;
 	}
 	
-//	public ASTLeaf toAST(){
-//
-//		ASTLeaf ast = new ASTLeaf(this);
-//		ast.addChildren(this.getCondition().toAST());
-//
-//		ast.addChildren(ifStatement.toAST());
-//		ast.addChildren(elseStatement.toAST());
-//		
-//		return ast;
-//	}
+	
+	
+	public ASTNode toAST(){
+
+		ASTNode ast = new ASTNode(this,"IfElseCondi");
+		ast.addChildren(this.getCondi().toAST());
+
+		ast.addChildren(this.ifState.toAST());
+		ast.addChildren(this.elseState.toAST());
+		
+		return ast;
+	}
 
 }

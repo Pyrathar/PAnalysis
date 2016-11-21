@@ -52,6 +52,7 @@ public class Main {
 			FlowNode node = analyais.toFlowGraph(ast);
 			analyais.showFlow(node);
 			System.out.println(analyais.flowGraph);
+			
 			if(analysis.equals("RD")) {
 				
 			}

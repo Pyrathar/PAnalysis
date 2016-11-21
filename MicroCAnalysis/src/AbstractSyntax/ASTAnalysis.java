@@ -11,6 +11,7 @@ import datastructure.Program.End;
 import datastructure.Program.Program;
 import datastructure.Statement.Sequence;
 import datastructure.Statement.Statement;
+import datastructure.Statement.Condition.IFElseCondi;
 import datastructure.Statement.Condition.WhileCondi;
 import datastructure.Statement.Interact.Write;
 public class ASTAnalysis {
@@ -34,8 +35,8 @@ public class ASTAnalysis {
 				String classname = element.getClass().toString();
 				System.out.println(classname);
 				
-				if(element.getClass().toString().matches(".*IfElse")){
-					//top.addChildren(((IFElseCondi) element).toAST());
+				if(element.getClass().toString().matches(".*IFElseCondi")){
+					top.addChildren(((IFElseCondi) element).toAST());
 				}else if(element.getClass().toString().matches(".*WhileCondi")){
 					top.addChildren(((WhileCondi) element).toAST());
 				}else if(element.getClass().toString().matches(".*ArrAssignment")){
@@ -51,7 +52,7 @@ public class ASTAnalysis {
 				}else if(element.getClass().toString().matches(".*Skip")){
 					//top.addChildren(((Skip) element).toAST());
 				}else if(element.getClass().toString().matches(".*Sequence")){
-					//top.addChildren(((Sequence) element).toAST());
+					top.addChildren(((Sequence) element).toAST());
 				}else if(element.getClass().toString().matches(".*VariDeclar")){
 					top.addChildren(((VariDeclar) element).toAST());
 				}else if(element.getClass().toString().matches(".*ArrayDeclar")){

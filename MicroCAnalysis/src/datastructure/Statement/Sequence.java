@@ -3,6 +3,8 @@ package datastructure.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import AbstractSyntax.ASTNode;
+
 public class Sequence extends Statement {
 	
 	private List<Statement> statementList;
@@ -34,6 +36,14 @@ public class Sequence extends Statement {
 
 	public void setStatementList(List<Statement> statementList) {
 		this.statementList = statementList;
+	}
+	
+	public ASTNode toAST() {
+		ASTNode node = new ASTNode(this,"sequence");
+		for(int i=0;i<this.statementList.size();i++) {
+			node.addChildren(this.statementList.get(i).toAST());
+		}
+		return node;
 	}
 
 }

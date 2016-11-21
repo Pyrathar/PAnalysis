@@ -1,5 +1,6 @@
 package datastructure.Statement.Branch;
 
+import AbstractSyntax.ASTNode;
 import datastructure.Statement.Statement;
 
 public class Break extends Statement {
@@ -9,13 +10,11 @@ public class Break extends Statement {
 	public Break(){
 	}
 
-	
-//	public ASTLeaf toAST(){
-//		
-//		ASTLeaf ast = new ASTLeaf(this);
-//		
-//		return ast;
-//	}
+	public ASTNode toAST(){
+		
+		ASTNode ast = new ASTNode(this,"break");
+		return ast;
+	}
 
 	public String toString() {
 		return "break";

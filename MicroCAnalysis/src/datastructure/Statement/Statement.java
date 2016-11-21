@@ -28,7 +28,7 @@ public class Statement extends ASTElement {
 	
 	public static Statement convertTextToASTElement(String text){
 		Statement stmt;
-		text = text.substring(text.indexOf("(", 1),text.lastIndexOf(")"));
+		text = text.replaceAll("\\(", "").replaceAll("\\)", "");
 		
 		stmt = new Break();
 		
@@ -47,6 +47,7 @@ public class Statement extends ASTElement {
 			stmt =  Write.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("stmt")){
 			//TODO
+			text = text.substring(5, text.length());
 			stmt =  Statement.convertTextToASTElement(text);
 		}else if(t[0].replaceAll("\\(", "").equals("breakStmt")){
 			stmt =  new Break();
@@ -68,14 +69,14 @@ public class Statement extends ASTElement {
 			//return ((ArrAssignment) this).toAST();
 		}else if(this.getClass().toString().matches(".*VariAssignment")){
 			return ((VariAssignment) this).toAST();
-		}else if(this.getClass().toString().matches("ArrRead")){
-			//return ((ArrRead) this).toAST();
+		}else if(this.getClass().toString().matches(".*break")){
+			return ((Break) this).toAST();
 		}else if(this.getClass().toString().matches(".*ReadVariable")){
 			return ((ReadVariable) this).toAST();
-		}else if(this.getClass().toString().matches("Write")){
+		}else if(this.getClass().toString().matches(".*Write")){
 			//return ((Write) this).toAST();
-		}else if(this.getClass().toString().matches("Skip")){
-			//return ((Skip) this).toAST();
+		}else if(this.getClass().toString().matches(".*Sequence")){
+			return ((Sequence) this).toAST();
 		}
 		
 		return null;
