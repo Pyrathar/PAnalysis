@@ -71,6 +71,8 @@ public class Statement extends ASTElement {
 			return ((VariAssignment) this).toAST();
 		}else if(this.getClass().toString().matches(".*break")){
 			return ((Break) this).toAST();
+		}else if(this.getClass().toString().matches(".*continue")){
+			return ((Continue) this).toAST();
 		}else if(this.getClass().toString().matches(".*ReadVariable")){
 			return ((ReadVariable) this).toAST();
 		}else if(this.getClass().toString().matches(".*Write")){

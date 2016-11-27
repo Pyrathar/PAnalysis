@@ -50,8 +50,12 @@ public class Condition extends Expression {
 			if(sta.length >= 1) {
 				Expression exp = Expression.convertTextToASTElement(sta[1]);
 				Expression exp1 = Expression.convertTextToASTElement(sta[2]);
-				if(sta[1].split(" ")[2].equals("+")) {
-					return new BinaryOperator(exp,exp1,BinaryOp.ADD);
+				String operator = sta[1].split(" ")[2].replaceAll(" ", "");
+				BinaryOp[] op = BinaryOp.values();
+				for(int i=0;i<op.length;i++){
+					if(op[i].getOperator().equals(operator)) {
+						return new BinaryOperator(exp,exp1,op[i]);
+					}
 				}
 			}
 		}

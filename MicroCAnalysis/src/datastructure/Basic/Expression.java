@@ -14,39 +14,38 @@ private static String astType = "aexpr";
 	
 	public static Expression convertTextToASTElement(String text){
 		text = text.replaceAll("\\(", "").replaceAll("\\)", "");
-		String[] expressions = text.split(astType);
-		if(expressions.length == 1) {
-			String[] val = text.split(" ");
-			if(val[0].equals("identifier")){
-				return new Variable(val[1]);
-			}else {
-				return new Constant(Integer.parseInt(val[1]));
+		if(text.contains("[")) {
+			String[] expressions= text.split("\\[ | \\]");
+			if(expressions.length != 0) {
+				String name = expressions[0].replaceAll(" ", "").split("identifier")[1];
+				return new ArrVariable(name,Expression.convertTextToASTElement(expressions[1]));
 			}
-		}else if(expressions.length == 2){
-			//read or write statement or array defi
-			if(expressions[1].contains("identifier") || expressions[1].contains("integer")) {
-				String[] sple = expressions[1].split(" ");
-				if(sple[3].equals("identifier")){
-					return new Variable(sple[4]);
+		}else {
+			String[] expressions = text.split(astType);
+			if(expressions.length == 1) {
+				String[] val = text.split(" ");
+				if(val[0].equals("identifier")){
+					return new Variable(val[1]);
 				}else {
-					return new Constant(Integer.parseInt(sple[4]));
+					return new Constant(Integer.parseInt(val[1]));
+				}
+			}else if(expressions.length == 2){
+				//read or write statement or array defi
+				if(expressions[1].contains("identifier") || expressions[1].contains("integer")) {
+					String[] sple = expressions[1].split(" ");
+					if(sple[3].equals("identifier")){
+						return new Variable(sple[4]);
+					}else {
+						return new Constant(Integer.parseInt(sple[4]));
+					}
 				}
 			}
-		}
-		for (String s : expressions) {
-			String[] a = s.trim().split(" ");
-			if(a.length > 3){
-				return Condition.convertTextToASTElement(removeFirstEle(expressions));
+			for (String s : expressions) {
+				String[] a = s.trim().split(" ");
+				if(a.length > 3){
+					return Condition.convertTextToASTElement(removeFirstEle(expressions));
+				}
 			}
-//			if(a.length == 2 || a.length == 3 && a[2].equals("]")){
-//				if(a[1].equals("-")){
-//					//return new Negate(Arithmetic.convertTextToASTElement(astType+expressions[i+1]));
-//				}else if(a[1].matches("^-?\\d+$")){
-//					return new Constant(Integer.parseInt(a[1]));
-//				}else if(a[1].matches("[A-Za-z]")){
-//					return new Variable(a[1]);
-//				}
-//			}
 		}
 		return null;
 	}

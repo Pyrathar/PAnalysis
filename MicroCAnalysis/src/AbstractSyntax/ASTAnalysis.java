@@ -5,6 +5,7 @@ import java.util.List;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import datastructure.Assignment.VariAssignment;
 import datastructure.Declaration.ArrayDeclar;
 import datastructure.Declaration.VariDeclar;
 import datastructure.Program.End;
@@ -41,8 +42,8 @@ public class ASTAnalysis {
 					top.addChildren(((WhileCondi) element).toAST());
 				}else if(element.getClass().toString().matches(".*ArrAssignment")){
 					//top.addChildren(((ArrayAssignment) element).toAST());
-				}else if(element.getClass().toString().matches(".*VarAssignment")){
-					//top.addChildren(((VarAssignment) element).toAST());
+				}else if(element.getClass().toString().matches(".*VariAssignment")){
+					top.addChildren(((VariAssignment) element).toAST());
 				}else if(element.getClass().toString().matches(".*ArrRead")){
 					//top.addChildren(((ArrRead) element).toAST());
 				}else if(element.getClass().toString().matches(".*VarRead")){
@@ -125,7 +126,6 @@ public class ASTAnalysis {
 		ASTNode node = new ASTNode(whileCode.getCondi(),"");
 		FlowNode condi = new FlowNode(previous,node,flowId);
 		previous.setNextFirst(condi);
-		flowId++;
 		flowForSequence(whileCode.getWhileState(),condi,true);
 		
 		return condi;
@@ -152,25 +152,19 @@ public class ASTAnalysis {
 		if(states != null && states.size() >0) {
 			for(int i=0;i<states.size();i++) {
 				ASTNode node = new ASTNode(states.get(i),"");
+				flowId ++;
 				FlowNode fl = new FlowNode(node,flowId);
 				System.out.println(flowId);
-				flowId++;
-				if(i==0) {
-					if(curNode.getNext()[0] == null) {
-						curNode.setNextFirst(fl);
-					}else {
-						curNode.setNextSecond(fl);
-					}
-					curNode = fl;
+				if(curNode.getNext()[0] == null) {
+					curNode.setNextFirst(fl);
 				}else {
-					if(i==states.size()-1 && isWhile) {
-						fl.setNextFirst(previous);
-					}
-					if(curNode.getNext()[0] == null) {
-						curNode.setNextFirst(fl);
-					}else {
-						curNode.setNextSecond(fl);
-					}
+					curNode.setNextSecond(fl);
+				}
+				if(states.size() != 1) {
+					curNode = fl;
+				}
+				if(i==states.size()-1 && isWhile) {
+					fl.setNextFirst(previous);
 				}
 			}
 		}

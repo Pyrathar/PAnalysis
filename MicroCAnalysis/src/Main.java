@@ -13,6 +13,10 @@ import org.antlr.v4.runtime.RecognitionException;
 import AbstractSyntax.ASTAnalysis;
 import AbstractSyntax.ASTNode;
 import AbstractSyntax.FlowNode;
+import algorithm.worklist.MFP;
+import algorithm.worklist.Worklist;
+import monotone.MonotoneFramework;
+import monotone.SignDetectionAnalysis;
 import parser.MicroCLexer;
 import parser.MicroCParser;
 
@@ -53,8 +57,22 @@ public class Main {
 			analyais.showFlow(node);
 			System.out.println(analyais.flowGraph);
 			
-			if(analysis.equals("RD")) {
-				
+			if (analysis.equalsIgnoreCase("DS")) {
+				System.out.println();
+				System.out.println("Detection of Signs analysis result:");
+				Worklist ds = new SignDetectionAnalysis(new MonotoneFramework(node, node.toList(), '0'));
+				MFP result = ds.worklistAlgorithm();
+
+				System.out.print("   Circle:");
+				System.out.print("\t\t\t");
+				System.out.print("Bullet:");
+				System.out.println();
+				for (int i = 0; i < result.getCircles().length; i++) {
+					System.out.print(i + 1 + ": ");
+					ds.printList(result.getCircle(i + 1));
+					ds.printList(result.getBullet(i + 1));
+					System.out.println();
+				}
 			}
 //			if (analysis.equals("RD")) {
 //				System.out.println();
