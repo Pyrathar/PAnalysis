@@ -63,8 +63,6 @@ public abstract class Worklist {
 				if (e != null && e.size() > 0) {
 					analysis.setCircleLabel(l.getLabel_2().getId(), copyList(c));
 					c = copyList(c);
-//					printList(analysis.getCircle(l.getLabel_2().getId()));
-//					System.out.println();
 				}
 				continue;
 			}
@@ -102,13 +100,16 @@ public abstract class Worklist {
 	public abstract boolean listSubset(List<MFPElement> first, List<MFPElement> second);
 
 	public void printList(List<MFPElement> list){
-		for (MFPElement element : list) {
-			System.out.print("("+element.getName() + "," + element.getLineNumber() + ")");
+		if(list != null && list.size() >0) {
+			for (MFPElement element : list) {
+				System.out.print("("+element.getName() + "," + element.getLineNumber() + ")");
+			}
+			if(list.size() > 4){
+				System.out.print("\t");
+			}else {
+				System.out.print("\t\t");
+			}
 		}
-		if(list.size() > 4)
-			System.out.print("\t");
-		else
-			System.out.print("\t\t");
 	}
 	
 	public abstract List<MFPElement> analysis(FlowNode node);
