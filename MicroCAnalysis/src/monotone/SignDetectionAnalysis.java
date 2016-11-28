@@ -16,6 +16,9 @@ import datastructure.Assignment.VariAssignment;
 import datastructure.Basic.ArrVariable;
 import datastructure.Basic.Constant;
 import datastructure.Basic.Variable;
+import datastructure.Declaration.ArrayDeclar;
+import datastructure.Declaration.VariDeclar;
+import datastructure.Enum.BinaryOp;
 import datastructure.Operator.BinaryOperator;
 import datastructure.Statement.Condition.WhileCondi;
 import datastructure.Statement.Interact.Read;
@@ -34,14 +37,16 @@ public class SignDetectionAnalysis extends Worklist{
 
 	@Override
 	public void printList(List<MFPElement> list) {
-		for (MFPElement element : list) {
-			MFPElement_Signs signEle = (MFPElement_Signs) element;
-			System.out.print("(" + signEle.getName() + "," + Arrays.toString(signEle.getSigns().toArray()) + ")");
+		if(list != null && list.size()>0) {
+			for (MFPElement element : list) {
+				MFPElement_Signs signEle = (MFPElement_Signs) element;
+				System.out.print("(" + signEle.getName() + "," + Arrays.toString(signEle.getSigns().toArray()) + ")");
+			}
+			if (list.size() > 4)
+				System.out.print("\t");
+			else
+				System.out.print("\t\t");
 		}
-		if (list.size() > 4)
-			System.out.print("\t");
-		else
-			System.out.print("\t\t");
 	}
 
 	@Override
@@ -56,12 +61,24 @@ public class SignDetectionAnalysis extends Worklist{
 		List<MFPElement> elements = new ArrayList<MFPElement>();
 		List<String> addedVariables = new ArrayList<String>();
 		for (FlowNode n : F.toList()) {
-			String varName = n.getLeaf().getChildren().get(1).getElement().toString();
-			if (!(n.getLeaf().getElement() instanceof WhileCondi) && !addedVariables.contains(varName)) {
-				MFPElement_Signs ele = new MFPElement_Signs(0, varName, new HashSet<Character>());
-				ele.getSigns().add('0');
-				elements.add(ele);
-				addedVariables.add(varName);
+			//if it is declaration, then get the element and add to element list
+			if(n.getLeaf().getElement().getClass().toString().matches(".*Declar")) {
+				ASTElement element = n.getLeaf().getChildren().get(1).getElement();
+				if(element != null) {
+					String varName = "";
+					System.out.println(n.getLeaf().getElement().getClass().toString());
+					if(n.getLeaf().getElement().getClass().toString().matches(".*ArrayDeclar")) {
+						varName = ((ArrVariable)element).getName();
+					}else {
+						 varName = element.toString();
+					}
+					if (!(n.getLeaf().getElement() instanceof WhileCondi) && !addedVariables.contains(varName)) {
+						MFPElement_Signs ele = new MFPElement_Signs(0, varName, new HashSet<Character>());
+						ele.getSigns().add('0');
+						elements.add(ele);
+						addedVariables.add(varName);
+					}
+				}
 			}
 		}
 		return elements;
@@ -114,16 +131,26 @@ public class SignDetectionAnalysis extends Worklist{
 	}
 
 	public List<MFPElement> transferFunction(FlowNode node, List<MFPElement> last) {
-		String name = node.getLeaf().getChildren().get(0).getElement().toString();
+		String name = "";
+		System.out.println(node.getLeaf().getElement().getClass().toString());
+		if(node.getLeaf().getElement().getClass().toString().matches(".*Declar")) {
+			name = node.getLeaf().getChildren().get(1).getElement().toString();
+		}else if(node.getLeaf().getElement() instanceof BinaryOperator){
+			BinaryOperator binary = (BinaryOperator)node.getLeaf().getElement();
+			name = ((Variable)binary.getLeftValue()).getName();
+		}else{
+			name = node.getLeaf().getChildren().get(0).getElement().toString();
+		}
 
 		ASTElement element = node.getLeaf().getElement();
 		MFPElement_Signs elem = null;
 		if (element instanceof VariAssignment) {
-			Set<Character> signSet = determineArithmeticSign(node.getLeaf().getChildren().get(1), last);
+			Set<Character> signSet = determineArithmeticSign(node.getLeaf().getChildren().get(2), last);
 			elem = new MFPElement_Signs(node.getId(), name, signSet);
 		} else if (element instanceof ArrayAssignment) {
+			name = name.split("\\[|\\]")[0];
 			Set<Character> signSet_a1 = determineArithmeticSign(node.getLeaf().getChildren().get(0), last);
-			Set<Character> signSet_a2 = determineArithmeticSign(node.getLeaf().getChildren().get(1), last);
+			Set<Character> signSet_a2 = determineArithmeticSign(node.getLeaf().getChildren().get(2), last);
 			if (signSet_a1.isEmpty() || signSet_a1.equals(negative) || signSet_a2.isEmpty()) {
 				elem = new MFPElement_Signs(node.getId(), name, new HashSet<Character>());
 			} else {
@@ -134,27 +161,35 @@ public class SignDetectionAnalysis extends Worklist{
 			elem.getSigns().addAll(Arrays.asList(new Character[] { '+', '0', '-' }));
 		}else if (element instanceof Write) {
 			if (node.getLeaf().getChildren().get(0).getElement() instanceof ArrVariable) {
-				Set<Character> signSet = determineArithmeticSign(node.getLeaf().getChildren().get(1), last);
+				Set<Character> signSet = determineArithmeticSign(node.getLeaf().getChildren().get(0), last);
 				if (signSet.isEmpty() || signSet.equals(negative)) {
 					elem = new MFPElement_Signs(node.getId(), name, new HashSet<Character>());
 				} else {
-					for (MFPElement lastElem : last) {
-						MFPElement_Signs lastElemSigns = (MFPElement_Signs) lastElem;
-						if (elem.getName().equals(lastElemSigns.getName())) {
-							elem = lastElemSigns;
+					if(name.contains("[")){
+						String[] varis = name.split("\\[|\\]");
+						for(int i=0;i<varis.length;i++){
+							for (MFPElement lastElem : last) {
+								MFPElement_Signs lastElemSigns = (MFPElement_Signs) lastElem;
+								if (varis[i].equals(lastElemSigns.getName())) {
+									elem = lastElemSigns;
+								}
+							}
 						}
 					}
 				}
 			}
-		} else if (element instanceof ArrVariable) {
+		} else if (element instanceof ArrayDeclar) {
 			Set<Character> signSet = determineArithmeticSign(node.getLeaf().getChildren().get(0), last);
 			elem = new MFPElement_Signs(node.getId(), name, new HashSet<Character>());
 			if (!signSet.equals(negative) && !signSet.equals(zero)) {
 				elem.getSigns().add('0');
 			}
-		} else if (element instanceof Variable) {
+		} else if (element instanceof VariDeclar) {
 			elem = new MFPElement_Signs(node.getId(), name, new HashSet<Character>());
 			elem.getSigns().add('0');
+		} else if(element instanceof BinaryOperator) {
+			Set<Character> signs = determineArithmeticSign(node.getLeaf(),last);
+			elem = new MFPElement_Signs(node.getId(), name, signs);
 		} else {
 			return last;
 		}
@@ -201,28 +236,13 @@ public class SignDetectionAnalysis extends Worklist{
 				result.add('-');
 		} else if (element instanceof BinaryOperator) {
 			List<ASTNode> children = leaf.getChildren();
-			List<Set<Character>> signSets = new ArrayList<Set<Character>>();
-			for (int i = 0; i < children.size(); i++) {
-				ASTNode child = children.get(i);
-				signSets.add(determineArithmeticSign(child, last));
+			BinaryOperator binary = (BinaryOperator)element;
+			if(binary.getOperator().equals(BinaryOp.LE) || binary.getOperator().equals(BinaryOp.LT) 
+					||binary.getOperator().equals(BinaryOp.MINUS)) {
+				result.add('-');
+			}else {
+				result.add('+');
 			}
-			Set<Character> signSet_1 = signSets.get(0);
-			Set<Character> signSet_2 = signSets.get(1);
-			BinaryOperator opA = (BinaryOperator) element;
-//			OpA op = opA.getOperator();
-//			for (Character sign1 : signSet_1) {
-//				for (Character sign2 : signSet_2) {
-//					if (op == OpA.ADDITION) {
-//						result.addAll(add(sign1, sign2));
-//					} else if (op == OpA.SUBTRACTION) {
-//						result.addAll(sub(sign1, sign2));
-//					} else if (op == OpA.MULIPLICATION) {
-//						result.addAll(mult(sign1, sign2));
-//					} else if (op == OpA.DIVISION) {
-//						result.addAll(div(sign1, sign2));
-//					}
-//				}
-//			}
 		}
 		return result;
 	}

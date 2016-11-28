@@ -33,8 +33,8 @@ public class VariDeclar extends Declaration {
 	
 	public ASTNode toAST() {
 		ASTNode ast = new ASTNode(this,"VariableDeclaration");
-		ast.addChildren(new ASTNode(type.toString()));
-		ast.addChildren(value.toAST());
+		ast.addChildren(new ASTNode(this.getType().toString()));
+		ast.addChildren(this.getValue().toAST());
 		return ast;
 	}
 	public String toString() {

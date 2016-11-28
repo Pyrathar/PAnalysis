@@ -31,7 +31,7 @@ public class VariAssignment extends Assignment {
 		
 		ASTNode ast = new ASTNode(this,"VariableAssignment");
 
-		ast.addChildren(new ASTNode(this.value,this.value.getName()));
+		ast.addChildren(new ASTNode(this.getValue(),this.getValue().getName()));
 		ast.addChildren(new ASTNode(BinaryOp.EQ.toString()));
 		ast.addChildren(this.getAssignment().toAST());
 		

@@ -67,11 +67,14 @@ public class Main {
 				System.out.print("\t\t\t");
 				System.out.print("Bullet:");
 				System.out.println();
+				System.out.println(result.getCircles().length);
 				for (int i = 0; i < result.getCircles().length; i++) {
-					System.out.print(i + 1 + ": ");
-					ds.printList(result.getCircle(i + 1));
-					ds.printList(result.getBullet(i + 1));
-					System.out.println();
+					if(result.getCircle(i) != null && result.getCircle(i).size() >0) {
+						System.out.print(i + 1 + ": ");
+						ds.printList(result.getCircle(i));
+						ds.printList(result.getBullet(i));
+						System.out.println();
+					}
 				}
 			}
 //			if (analysis.equals("RD")) {

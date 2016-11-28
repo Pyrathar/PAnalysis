@@ -39,9 +39,9 @@ public class ArrayDeclar extends Declaration {
 	public ASTNode toAST(){
 		
 		ASTNode ast = new ASTNode(this,"ArrayDeclaration");
-		ast.addChildren(new ASTNode(type.toString()));
+		ast.addChildren(new ASTNode(this.getType().toString()));
 		//ast.addChildren(new ASTNode(name.getName()));
-		ast.addChildren(name.toAST());
+		ast.addChildren(this.getName().toAST());
 		
 		return ast;
 	}

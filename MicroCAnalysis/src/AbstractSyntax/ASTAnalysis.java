@@ -89,7 +89,7 @@ public class ASTAnalysis {
 				first = newFlowNode;
 			}else if(leaf.getElement().getClass().toString().matches(".*WhileCondi")) {
 				System.out.println(preFlowNode[0].toString());
-				newFlowNode= flowForWhile(leaf.getElement(),preFlowNode[0]);
+				newFlowNode= flowForWhile(leaf,preFlowNode[0]);
 				if(preFlowNode[0].getNext() == null || preFlowNode[0].getNext()[0] == null)
 					preFlowNode[0].setNextFirst(newFlowNode);
 				else
@@ -121,12 +121,11 @@ public class ASTAnalysis {
 		return first;
 	}
 	
-	private FlowNode flowForWhile(ASTElement element,FlowNode previous) {
-		WhileCondi whileCode = ((WhileCondi)element);
-		ASTNode node = new ASTNode(whileCode.getCondi(),"");
-		FlowNode condi = new FlowNode(previous,node,flowId);
+	private FlowNode flowForWhile(ASTNode node,FlowNode previous) {
+		ASTNode first = node.getChildren().get(0);
+		FlowNode condi = new FlowNode(previous,first,flowId);
 		previous.setNextFirst(condi);
-		flowForSequence(whileCode.getWhileState(),condi,true);
+		flowForSequence(node.getChildren(),condi,true);
 		
 		return condi;
 	}
@@ -140,18 +139,16 @@ public class ASTAnalysis {
 		flowId++;
 		previous.setNextFirst(newNode);
 		cureNo = newNode;
-		flowForSequence(ifelse.getIfState(),cureNo,false);
-		flowForSequence(ifelse.getElseState(),cureNo,false);
+		//flowForSequence(ifelse.getIfState(),cureNo,false);
+		//flowForSequence(ifelse.getElseState(),cureNo,false);
 		return newNode;
 	}
 	
-	public FlowNode flowForSequence(ASTElement element,FlowNode previous,boolean isWhile) {
+	public FlowNode flowForSequence(List<ASTNode> nodelist,FlowNode previous,boolean isWhile) {
 		FlowNode curNode = previous;
-		Sequence sequ = (Sequence)element;
-		List<Statement> states = sequ.getStatementList();
-		if(states != null && states.size() >0) {
-			for(int i=0;i<states.size();i++) {
-				ASTNode node = new ASTNode(states.get(i),"");
+		if(nodelist != null && nodelist.size() >0) {
+			for(int i=1;i<nodelist.size();i++) {
+				ASTNode node = nodelist.get(i);
 				flowId ++;
 				FlowNode fl = new FlowNode(node,flowId);
 				System.out.println(flowId);
@@ -160,10 +157,10 @@ public class ASTAnalysis {
 				}else {
 					curNode.setNextSecond(fl);
 				}
-				if(states.size() != 1) {
+				if(nodelist.size() != 1) {
 					curNode = fl;
 				}
-				if(i==states.size()-1 && isWhile) {
+				if(i==nodelist.size()-1 && isWhile) {
 					fl.setNextFirst(previous);
 				}
 			}

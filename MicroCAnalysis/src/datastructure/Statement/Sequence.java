@@ -40,8 +40,8 @@ public class Sequence extends Statement {
 	
 	public ASTNode toAST() {
 		ASTNode node = new ASTNode(this,"sequence");
-		for(int i=0;i<this.statementList.size();i++) {
-			node.addChildren(this.statementList.get(i).toAST());
+		for(int i=0;i<this.getStatementList().size();i++) {
+			node.addChildren(this.getStatementList().get(i).toAST());
 		}
 		return node;
 	}

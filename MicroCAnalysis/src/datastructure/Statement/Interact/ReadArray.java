@@ -28,7 +28,7 @@ public class ReadArray extends Read {
 		
 		ASTNode ast = new ASTNode(this,"");
 
-		ast.addChildren(value.toAST());
+		ast.addChildren(this.getValue().toAST());
 		
 		return ast;
 	}

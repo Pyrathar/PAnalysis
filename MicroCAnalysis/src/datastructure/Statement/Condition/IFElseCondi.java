@@ -59,8 +59,8 @@ public class IFElseCondi extends Control {
 		ASTNode ast = new ASTNode(this,"IfElseCondi");
 		ast.addChildren(this.getCondi().toAST());
 
-		ast.addChildren(this.ifState.toAST());
-		ast.addChildren(this.elseState.toAST());
+		ast.addChildren(this.getIfState().toAST());
+		ast.addChildren(this.getElseState().toAST());
 		
 		return ast;
 	}

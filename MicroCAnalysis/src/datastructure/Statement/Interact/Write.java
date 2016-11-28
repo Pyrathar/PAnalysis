@@ -26,7 +26,7 @@ public class Write extends Statement{
 		
 		ASTNode ast = new ASTNode(this,"write");
 
-		ast.addChildren(value.toAST());
+		ast.addChildren(this.getValue().toAST());
 		
 		return ast;
 	}

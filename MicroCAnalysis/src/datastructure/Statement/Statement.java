@@ -2,6 +2,7 @@ package datastructure.Statement;
 
 import AbstractSyntax.ASTElement;
 import AbstractSyntax.ASTNode;
+import datastructure.Assignment.ArrayAssignment;
 import datastructure.Assignment.Assignment;
 import datastructure.Assignment.VariAssignment;
 import datastructure.Statement.Branch.Break;
@@ -62,11 +63,11 @@ public class Statement extends ASTElement {
 	public ASTNode toAST(){
 		System.out.println(this.getClass().toString());
 		if(this.getClass().toString().matches("IfElse")){
-			//return ((IfElse) this).toAST();
+			return ((IFElseCondi) this).toAST();
 		}else if(this.getClass().toString().matches("While")){
 			return ((WhileCondi) this).toAST();
 		}else if(this.getClass().toString().matches("ArrAssignment")){
-			//return ((ArrAssignment) this).toAST();
+			return ((ArrayAssignment) this).toAST();
 		}else if(this.getClass().toString().matches(".*VariAssignment")){
 			return ((VariAssignment) this).toAST();
 		}else if(this.getClass().toString().matches(".*break")){
@@ -76,7 +77,7 @@ public class Statement extends ASTElement {
 		}else if(this.getClass().toString().matches(".*ReadVariable")){
 			return ((ReadVariable) this).toAST();
 		}else if(this.getClass().toString().matches(".*Write")){
-			//return ((Write) this).toAST();
+			return ((Write) this).toAST();
 		}else if(this.getClass().toString().matches(".*Sequence")){
 			return ((Sequence) this).toAST();
 		}

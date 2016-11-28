@@ -26,7 +26,7 @@ public class ArrayAssignment extends Assignment {
 		
 		ASTNode ast = new ASTNode(this,"ArrayAssignment");
 
-		ast.addChildren(this.value.toAST());
+		ast.addChildren(this.getValue().toAST());
 		ast.addChildren(new ASTNode(BinaryOp.EQ.toString()));
 		ast.addChildren(this.getAssignment().toAST());
 		
