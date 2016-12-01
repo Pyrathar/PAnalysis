@@ -67,14 +67,20 @@ public class ASTAnalysis {
 	}
 	
 	public void showAST(ASTNode node, int level){
-		level++;
-		for (int i = 1; i < level; i++) {
-			System.out.print("    ");
-		}
-    	System.out.println(level + ": " + node.getName());
-    	for (ASTNode child : node.getChildren()) {
-			showAST(child, level);
-		}
+		if(node.getName().equals("}")) {
+    		level=1;
+    		System.out.println(level + ": " + node.getName());
+    		return;
+    	}else {
+    		level++;
+    		for (int i = 1; i < level; i++) {
+    			System.out.print("    ");
+    		}
+    		System.out.println(level + ": " + node.getName());
+        	for (ASTNode child : node.getChildren()) {
+    			showAST(child, level);
+    		}
+    	}
 	}
 	
 	public FlowNode toFlowGraph(ASTNode ast){
@@ -95,7 +101,7 @@ public class ASTAnalysis {
 				else
 					preFlowNode[0].setNextSecond(newFlowNode);
 			}else if(leaf.getElement().getClass().toString().matches(".*IFElseCondi")) {
-				newFlowNode = flowForIfelse(leaf.getElement(),preFlowNode[0]);
+				newFlowNode = flowForIfelse(leaf,preFlowNode[0]);
 				if(preFlowNode[0].getNext() == null || preFlowNode[0].getNext()[0] == null)
 					preFlowNode[0].setNextFirst(newFlowNode);
 				else
@@ -130,38 +136,46 @@ public class ASTAnalysis {
 		return condi;
 	}
 	
-	public FlowNode flowForIfelse(ASTElement element,FlowNode previous) {
-		IFElseCondi ifelse = (IFElseCondi) element;
-		FlowNode cureNo = previous;
-		ASTNode node = new ASTNode(ifelse,"");
-		FlowNode newNode = new FlowNode(node,flowId);
+	public FlowNode flowForIfelse(ASTNode node,FlowNode previous) {
+		ASTNode first = node.getChildren().get(0);
+		//ASTNode node = new ASTNode(ifelse,"");
+		FlowNode newNode = new FlowNode(first,flowId);
 		System.out.println(flowId);
-		flowId++;
 		previous.setNextFirst(newNode);
-		cureNo = newNode;
-		//flowForSequence(ifelse.getIfState(),cureNo,false);
-		//flowForSequence(ifelse.getElseState(),cureNo,false);
+		FlowNode cureNo = newNode;
+		flowForSequence(node.getChildren().get(1).getChildren(),cureNo,false);
+		flowForSequence(node.getChildren().get(2).getChildren(),cureNo,false);
 		return newNode;
 	}
 	
 	public FlowNode flowForSequence(List<ASTNode> nodelist,FlowNode previous,boolean isWhile) {
 		FlowNode curNode = previous;
 		if(nodelist != null && nodelist.size() >0) {
-			for(int i=1;i<nodelist.size();i++) {
-				ASTNode node = nodelist.get(i);
+			if(nodelist.size() == 1) {
 				flowId ++;
-				FlowNode fl = new FlowNode(node,flowId);
-				System.out.println(flowId);
+				FlowNode flow = new FlowNode(nodelist.get(0),flowId);
 				if(curNode.getNext()[0] == null) {
-					curNode.setNextFirst(fl);
+					curNode.setNextFirst(flow);
 				}else {
-					curNode.setNextSecond(fl);
+					curNode.setNextSecond(flow);
 				}
-				if(nodelist.size() != 1) {
-					curNode = fl;
-				}
-				if(i==nodelist.size()-1 && isWhile) {
-					fl.setNextFirst(previous);
+			}else {
+				for(int i=1;i<nodelist.size();i++) {
+					ASTNode node = nodelist.get(i);
+					flowId ++;
+					FlowNode fl = new FlowNode(node,flowId);
+					System.out.println(flowId);
+					if(curNode.getNext()[0] == null) {
+						curNode.setNextFirst(fl);
+					}else {
+						curNode.setNextSecond(fl);
+					}
+					if(nodelist.size() != 1) {
+						curNode = fl;
+					}
+					if(i==nodelist.size()-1 && isWhile) {
+						fl.setNextFirst(previous);
+					}
 				}
 			}
 		}

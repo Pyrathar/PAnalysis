@@ -58,43 +58,46 @@ public class Main {
 			analyais.showFlow(node);
 			System.out.println(analyais.flowGraph);
 			
-//			if (analysis.equalsIgnoreCase("DS")) {
-//				System.out.println();
-//				System.out.println("Detection of Signs analysis result:");
-//				Worklist ds = new SignDetectionAnalysis(new MonotoneFramework(node, node.toList(), '0'));
-//				MFP result = ds.worklistAlgorithm();
-//
-//				System.out.print("  Analysis Circle:");
-//				System.out.print("\t\t\t\t");
-//				System.out.print("Analysi Bullet:");
-//				System.out.println();
-//				for (int i = 0; i < result.getCircles().length; i++) {
-//					if(result.getCircle(i+1) != null && result.getCircle(i+1).size() >0) {
-//						System.out.print(i + 1 + ": ");
-//						ds.printList(result.getCircle(i+1));
-//						if(i+1 < 5) {
-//							System.out.print("\t");
-//						}
-//						ds.printList(result.getBullet(i+1));
-//						System.out.println();
-//					}
-//				}
-//			}
+			if (analysis.equalsIgnoreCase("DS")) {
+				System.out.println();
+				System.out.println("Detection of Signs analysis result:");
+				Worklist ds = new SignDetectionAnalysis(new MonotoneFramework(node, node.toList(), '0'));
+				MFP result = ds.worklistAlgorithm();
+
+				System.out.print("  Signs Analysis Entry:");
+				System.out.print("\t\t");
+				System.out.print("Signs Analysi Exit:");
+				System.out.println();
+				for (int i = 0; i < result.getCircles().length; i++) {
+					if(result.getCircle(i+1) != null && result.getCircle(i+1).size() >0) {
+						System.out.print(i + 1 + ": ");
+						ds.printList(result.getCircle(i+1));
+						if(i+1 < 5) {
+							System.out.print("\t");
+						}
+						ds.printList(result.getBullet(i+1));
+						System.out.println();
+					}
+				}
+			}
 			if (analysis.equals("RD")) {
 				System.out.println();
 				System.out.println("Reaching defintion result:");
 				Worklist rd = new ReachingDefinitionAnalysis(new MonotoneFramework(node, node.toList()));
 				MFP r = rd.worklistAlgorithm();
 
-				System.out.print("   Circle:");
-				System.out.print("\t\t\t");
-				System.out.print("Bullet:");
+				System.out.print("   Reaching Definition Entry:");
+				System.out.print("\t\t");
+				System.out.print("Reaching Definition Exit:");
 				System.out.println();
 				for (int i = 0; i < r.getCircles().length; i++) {
-					System.out.print(i + 1 + ": ");
-					rd.printList(r.getCircle(i + 1));
-					rd.printList(r.getBullet(i + 1));
-					System.out.println();
+					if(r.getBullet(i+1) != null && r.getBullet(i+1).size() !=0 ) {
+						System.out.print(i + 1 + ": ");
+						rd.printList(r.getCircle(i + 1));
+						System.out.print("\t\t");
+						rd.printList(r.getBullet(i + 1));
+						System.out.println();
+					}
 				}
 			}
 		} catch (RecognitionException e) {

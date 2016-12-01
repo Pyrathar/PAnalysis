@@ -1,0 +1,6 @@
+{ int x; 
+  int y;
+  x = 4;
+  y = 5;
+  if(x > y) {x=y;} else {x = y+2;}
+}

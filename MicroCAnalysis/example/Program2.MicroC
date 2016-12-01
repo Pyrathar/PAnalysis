@@ -1,0 +1,8 @@
+{ int x; 
+  int y;
+  x = 4;
+  y = 10;
+  while(x<y){
+   	y=y-1;
+  }
+}
