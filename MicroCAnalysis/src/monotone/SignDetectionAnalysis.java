@@ -66,7 +66,7 @@ public class SignDetectionAnalysis extends Worklist{
 				ASTElement element = n.getLeaf().getChildren().get(1).getElement();
 				if(element != null) {
 					String varName = "";
-					System.out.println(n.getLeaf().getElement().getClass().toString());
+					//System.out.println(n.getLeaf().getElement().getClass().toString());
 					if(n.getLeaf().getElement().getClass().toString().matches(".*ArrayDeclar")) {
 						varName = ((ArrVariable)element).getName();
 					}else {
@@ -132,7 +132,7 @@ public class SignDetectionAnalysis extends Worklist{
 
 	public List<MFPElement> transferFunction(FlowNode node, List<MFPElement> last) {
 		String name = "";
-		System.out.println(node.getLeaf().getElement().getClass().toString());
+		//System.out.println(node.getLeaf().getElement().getClass().toString());
 		if(node.getLeaf().getElement().getClass().toString().matches(".*Declar")) {
 			name = node.getLeaf().getChildren().get(1).getElement().toString();
 		}else if(node.getLeaf().getElement() instanceof BinaryOperator){

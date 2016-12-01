@@ -34,7 +34,7 @@ public class ASTAnalysis {
 				ASTElement element = ASTElement.convertTextToASTElement(e.toStringTree(parser));
 				//TODO Please modify this part to complete the analysis process
 				String classname = element.getClass().toString();
-				System.out.println(classname);
+				//System.out.println(classname);
 				
 				if(element.getClass().toString().matches(".*IFElseCondi")){
 					top.addChildren(((IFElseCondi) element).toAST());
@@ -94,7 +94,7 @@ public class ASTAnalysis {
 				newFlowNode = new FlowNode(leaf,flowId);
 				first = newFlowNode;
 			}else if(leaf.getElement().getClass().toString().matches(".*WhileCondi")) {
-				System.out.println(preFlowNode[0].toString());
+				//System.out.println(preFlowNode[0].toString());
 				newFlowNode= flowForWhile(leaf,preFlowNode[0]);
 				if(preFlowNode[0].getNext() == null || preFlowNode[0].getNext()[0] == null)
 					preFlowNode[0].setNextFirst(newFlowNode);
@@ -140,7 +140,7 @@ public class ASTAnalysis {
 		ASTNode first = node.getChildren().get(0);
 		//ASTNode node = new ASTNode(ifelse,"");
 		FlowNode newNode = new FlowNode(first,flowId);
-		System.out.println(flowId);
+		//System.out.println(flowId);
 		previous.setNextFirst(newNode);
 		FlowNode cureNo = newNode;
 		flowForSequence(node.getChildren().get(1).getChildren(),cureNo,false);
@@ -164,7 +164,7 @@ public class ASTAnalysis {
 					ASTNode node = nodelist.get(i);
 					flowId ++;
 					FlowNode fl = new FlowNode(node,flowId);
-					System.out.println(flowId);
+					//System.out.println(flowId);
 					if(curNode.getNext()[0] == null) {
 						curNode.setNextFirst(fl);
 					}else {
@@ -184,9 +184,9 @@ public class ASTAnalysis {
 	
 	public void showFlow(FlowNode node) {
 		flowGraph += node.getId();
-		System.out.println(node.getLeaf().getElement().getClass().toString());
+		//System.out.println(node.getLeaf().getElement().getClass().toString());
 		if(node.getLeaf().getElement().getClass().toString().matches(".*IFElseCondi")) {
-			System.out.println("sssss");
+			//System.out.println("sssss");
 			for(int i=0;i<node.getNext().length;i++) {
 				showNextNode(node.getNext()[i]);
 			}

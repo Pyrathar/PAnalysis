@@ -26,18 +26,18 @@ public class Main {
 	public static void main(String args[]) throws Exception {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print("Choose analysis you want done (RD or DS): ");
+		System.out.print("Choose analysis you want done (RD or DS): \n (1 for RD) \n (2 for DS) \n ");
 		String analysis = br.readLine();
-		System.out.println("Choose the file that the " + analysis + " analysis should run on: ");
+		System.out.println("Choose the file for analysis: ");
 		Files.walk(Paths.get("example/")).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {
-				System.out.print(filePath.getFileName() + "\t");
+				System.out.print(filePath.getFileName() + "\n");
 			}
 		});
 		System.out.println();
-		System.out.print("File: ");
+		System.out.print("Please enter the number in file name:");
 		String file = br.readLine();
-		file = "example/" + file;
+		file = "example/Program" + file + ".MicroC";
 		InputStream input = new FileInputStream(file);
 		CharStream cs = new ANTLRInputStream(input);
 
@@ -47,18 +47,17 @@ public class Main {
 
 		try {
 			MicroCParser.ProgramContext parserResult = parser.program();
-			// System.out.println(parserResult);
 			ASTAnalysis analyais = new ASTAnalysis();
 			ASTNode ast = analyais.toAST(parserResult.children, parser);
-			// a.showAST(ast, 0);
 			ast.getStmtAndDecl();
 			analyais.showAST(ast, 0);
 			
 			FlowNode node = analyais.toFlowGraph(ast);
 			analyais.showFlow(node);
+			System.out.println("Corresponding flow graph: \n");
 			System.out.println(analyais.flowGraph);
 			
-			if (analysis.equalsIgnoreCase("DS")) {
+			if (analysis.equals("2")) {
 				System.out.println();
 				System.out.println("Detection of Signs analysis result:");
 				Worklist ds = new SignDetectionAnalysis(new MonotoneFramework(node, node.toList(), '0'));
@@ -80,9 +79,9 @@ public class Main {
 					}
 				}
 			}
-			if (analysis.equals("RD")) {
+			if (analysis.equals("1")) {
 				System.out.println();
-				System.out.println("Reaching defintion result:");
+				System.out.println("Reaching definition result:");
 				Worklist rd = new ReachingDefinitionAnalysis(new MonotoneFramework(node, node.toList()));
 				MFP r = rd.worklistAlgorithm();
 

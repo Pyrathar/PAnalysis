@@ -63,7 +63,7 @@ private static String astType = "aexpr";
 	public ASTNode toAST(){
 		
 		ASTNode ast = new ASTNode(this,"");
-		System.out.println(this.getClass().toString());
+		//System.out.println(this.getClass().toString());
 		if(this.getClass().toString().matches(".*BinaryOperator")){
 			ast.setName("BinaryOperator");
 			ast.addChildren(((BinaryOperator) this).getLeftValue().toAST());

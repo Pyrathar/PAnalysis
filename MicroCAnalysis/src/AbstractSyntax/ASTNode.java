@@ -60,7 +60,7 @@ public class ASTNode {
 		
 		for (ASTNode astLeaf : this.getChildren()) {
 			if(astLeaf != null) {
-				System.out.println(astLeaf.element.getClass().toString());
+				//System.out.println(astLeaf.element.getClass().toString());
 				if(astLeaf.element.getClass().toString().matches("(.*datastructure\\.Declaration.*|.*datastructure\\.Statement.*)")
 						||astLeaf.element.getClass().toString().matches(".*datastructure\\.Assignment.*")){
 					stmtAndDecl.add(astLeaf);

@@ -38,7 +38,7 @@ public class ReachingDefinitionAnalysis extends Worklist {
 		
 		for (FlowNode node : F.toList()) {
 			String nodeName = node.getLeaf().getElement().getClass().toString();
-			System.out.println(nodeName);
+			//System.out.println(nodeName);
 			if(nodeName.matches(".*VariDeclar")){
 				Variable element = ((VariDeclar)node.getLeaf().getElement()).getValue();
 				variables.add(new MFPElement(element.getName(),0));
@@ -79,7 +79,7 @@ public class ReachingDefinitionAnalysis extends Worklist {
 		
 		List<MFPElement> kill = new ArrayList<MFPElement>();
 		String className = killNode.getLeaf().getElement().getClass().toString();
-		System.out.println(killNode.getLeaf().getElement().getClass().toString());
+		//System.out.println(killNode.getLeaf().getElement().getClass().toString());
 		String va = "";
 		if(className.matches(".*VariDeclar") ||  
 				className.matches(".*ArrayDeclar")) {
